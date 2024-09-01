@@ -31,6 +31,7 @@ public class ModDataGenerators {
             gen.addProvider(ev.includeServer(), new ModLangProvider(packOutput));
             gen.addProvider(ev.includeServer(), new ModItemModelProvider(packOutput, efh));
             gen.addProvider(ev.includeServer(), new ModStateAndModelProvider(packOutput, efh));
+            gen.addProvider(ev.includeServer(), new ModBootstrapProvider(packOutput, provider));
         }
     }
 

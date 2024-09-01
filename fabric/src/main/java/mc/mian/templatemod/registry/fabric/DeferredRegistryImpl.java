@@ -2,6 +2,7 @@ package mc.mian.templatemod.registry.fabric;
 
 import mc.mian.templatemod.registry.DeferredRegistry;
 import mc.mian.templatemod.registry.RegistrySupplier;
+import mc.mian.templatemod.registry.RegistrySupplierHolder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -24,11 +25,13 @@ public class DeferredRegistryImpl {
         private final String modid;
         private final Registry<T> registry;
         private final List<RegistrySupplier<T>> entries;
+        private final ResourceKey resourceKey;
 
         public Impl(String modid, ResourceKey<? extends Registry<T>> resourceKey) {
             this.modid = modid;
             this.registry = (Registry<T>) Objects.requireNonNull(BuiltInRegistries.REGISTRY.get(resourceKey.location()), "Registry " + resourceKey + " not found!");
             this.entries = new ArrayList<>();
+            this.resourceKey = resourceKey;
         }
 
         @Override
@@ -42,6 +45,14 @@ public class DeferredRegistryImpl {
             RegistrySupplier<R> registrySupplier = new RegistrySupplier<>(registeredId, Registry.register(this.registry, registeredId, supplier.get()));
             this.entries.add((RegistrySupplier<T>) registrySupplier);
             return registrySupplier;
+        }
+
+        @Override
+        public <R extends T> RegistrySupplierHolder<T, R> registerForHolder(String id, Supplier<R> supplier){
+            ResourceLocation registeredId = ResourceLocation.fromNamespaceAndPath(this.modid, id);
+            RegistrySupplier<R> registrySupplier = new RegistrySupplier<>(registeredId, Registry.register(this.registry, registeredId, supplier.get()));
+            this.entries.add((RegistrySupplier<T>) registrySupplier);
+            return RegistrySupplierHolder.create(this.resourceKey, registeredId);
         }
 
         @Override

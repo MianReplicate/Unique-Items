@@ -1,6 +1,7 @@
 package mc.mian.templatemod.registry;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
@@ -12,6 +13,8 @@ public abstract class DeferredRegistry<T> {
     public abstract void register();
 
     public abstract <R extends T> RegistrySupplier<R> register(String id, Supplier<R> supplier);
+
+    public abstract <R extends T> RegistrySupplierHolder<T, R> registerForHolder(String id, Supplier<R> supplier);
 
     public abstract Collection<RegistrySupplier<T>> getEntries();
 

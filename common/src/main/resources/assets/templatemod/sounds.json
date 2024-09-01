@@ -1,0 +1,10 @@
+{
+  "scratch": {
+    "sounds": [
+      {
+       "name": "templatemod:scratch",
+        "stream": true
+      }
+    ]
+  }
+}
