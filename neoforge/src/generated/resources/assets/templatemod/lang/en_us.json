@@ -1,3 +1,5 @@
 {
+  "block.templatemod.template_block": "Meowing Block",
+  "item.templatemod.template_item": "Meowing Item",
   "templatemod.configuration.title": "Minecraft Configuration"
 }

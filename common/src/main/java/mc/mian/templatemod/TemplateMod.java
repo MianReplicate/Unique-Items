@@ -1,5 +1,7 @@
 package mc.mian.templatemod;
 
+import mc.mian.templatemod.common.ModBlocks;
+import mc.mian.templatemod.common.ModItems;
 import mc.mian.templatemod.config.ModConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,5 +13,7 @@ public class TemplateMod {
 
     public static void init() {
         LOGGER.info("Meow? MEOW!!");
+        ModItems.register();
+        ModBlocks.register();
     }
 }

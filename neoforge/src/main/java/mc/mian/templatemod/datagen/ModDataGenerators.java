@@ -1,8 +1,12 @@
 package mc.mian.templatemod.datagen;
 
+import mc.mian.templatemod.common.ModBlocks;
+import mc.mian.templatemod.common.ModItems;
+import mc.mian.templatemod.util.ModResources;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.server.packs.PackType;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -31,8 +35,11 @@ public class ModDataGenerators {
     }
 
     private static void addVirtualPackContents(ExistingFileHelper existingFileHelper) {
-//        existingFileHelper.trackGenerated(
-//                ModResources.modLoc(PutPathHere), PackType.CLIENT_RESOURCES, PATH_SUFFIX, PATH_BLOCK_PREFIX
-//        );
+        existingFileHelper.trackGenerated(
+                ModResources.modLoc(ModItems.TEMPLATE_ITEM.getId().getPath()), PackType.CLIENT_RESOURCES, PATH_SUFFIX, PATH_ITEM_PREFIX
+        );
+        existingFileHelper.trackGenerated(
+                ModResources.modLoc(ModBlocks.TEMPLATE_BLOCK.getId().getPath()), PackType.CLIENT_RESOURCES, PATH_SUFFIX, PATH_BLOCK_PREFIX
+        );
     }
 }
