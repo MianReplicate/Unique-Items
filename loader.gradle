@@ -111,13 +111,14 @@ dependencies {
     } else if(loomPlatform == 'neoforge'){
         neoForge "net.neoforged:neoforge:${neo_version}"
 
-        modRuntimeOnly("maven.modrinth:sodium:${sodium_version}-neoforge")
+        // currently broken :<
+//        modRuntimeOnly("maven.modrinth:sodium:${sodium_version}-neoforge")
         runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
         runtimeOnly("curse.maven:modernfix-${modern_fix_id}:${modern_fix_forge}")
         runtimeOnly("curse.maven:ferritecore-${ferritecore_forge_id}:${ferritecore_forge}")
 
         // disable when doing datagen
-        runtimeOnly("curse.maven:mousetweaks-${mouse_tweaks_id}:${mouse_tweaks_forge}")
+//        runtimeOnly("curse.maven:mousetweaks-${mouse_tweaks_id}:${mouse_tweaks_forge}")
     }
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

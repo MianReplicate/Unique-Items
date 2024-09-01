@@ -10,6 +10,6 @@ public class TemplateMod {
     public static ModConfiguration config;
 
     public static void init() {
-        LOGGER.info("Hiya, I am a template mod!");
+        LOGGER.info("Meow? MEOW!!");
     }
 }

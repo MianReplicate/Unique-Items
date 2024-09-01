@@ -8,6 +8,7 @@ public class ModConfiguration {
     public ModConfiguration(final ModConfigSpec.Builder builder) {
         builder.comment("This category holds general values that most people will want to change.");
         builder.push("General Settings");
+        buildBoolean(builder, "meow?", true, "meow!");
     }
 
     private static ModConfigSpec.IntValue buildInt(final ModConfigSpec.Builder builder, String name, int defaultValue, int min, int max, @Nullable String comment) {
