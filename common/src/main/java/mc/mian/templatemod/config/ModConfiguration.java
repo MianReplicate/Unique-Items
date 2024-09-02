@@ -5,10 +5,11 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import javax.annotation.Nullable;
 
 public class ModConfiguration {
+    public final ModConfigSpec.BooleanValue meow;
     public ModConfiguration(final ModConfigSpec.Builder builder) {
         builder.comment("This category holds general values that most people will want to change.");
         builder.push("General Settings");
-        buildBoolean(builder, "meow", true, "meow!");
+        this.meow = buildBoolean(builder, "meow", true, "meow!");
     }
 
     private static ModConfigSpec.IntValue buildInt(final ModConfigSpec.Builder builder, String translationPath, int defaultValue, int min, int max, @Nullable String comment) {

@@ -1,4 +1,4 @@
-package mc.mian.templatemod.common;
+package mc.mian.templatemod.common.item;
 
 import mc.mian.templatemod.registry.DeferredRegistry;
 import mc.mian.templatemod.registry.RegistrySupplier;

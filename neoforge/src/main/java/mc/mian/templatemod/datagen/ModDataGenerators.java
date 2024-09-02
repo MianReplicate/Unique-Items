@@ -1,7 +1,7 @@
 package mc.mian.templatemod.datagen;
 
-import mc.mian.templatemod.common.ModBlocks;
-import mc.mian.templatemod.common.ModItems;
+import mc.mian.templatemod.common.block.ModBlocks;
+import mc.mian.templatemod.common.item.ModItems;
 import mc.mian.templatemod.util.ModResources;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;

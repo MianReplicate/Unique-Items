@@ -1,6 +1,6 @@
 package mc.mian.templatemod.datagen.bootstrap;
 
-import mc.mian.templatemod.common.ModSoundEvents;
+import mc.mian.templatemod.common.sound.ModSoundEvents;
 import mc.mian.templatemod.registry.RegistrySupplierHolder;
 import mc.mian.templatemod.util.ModResources;
 import net.minecraft.Util;
@@ -20,6 +20,6 @@ public class ModJukeboxSongsProvider {
     }
 
     public static void bootstrap(BootstrapContext<JukeboxSong> context) {
-        register(context, ModResources.TEMPLATE_JUKEBOX_SONG, ModSoundEvents.MUSIC_MEOW, 156, 11);
+        register(context, ModResources.TEMPLATE_JUKEBOX_SONG, ModSoundEvents.TEMPLATE_SOUND_EVENT, 156, 11);
     }
 }

@@ -145,6 +145,43 @@ subprojects {
     assemble.finalizedBy(mergeJars)
 }
 
+//unifiedPublishing {
+//    project {
+//        displayName = "${rootProject.minecraft_version} ${rootProject.mod_release_type} ${rootProject.mod_version}"
+//        releaseType = "${rootProject.mod_release_type}".toLowerCase()
+//        changelog = new File("${rootProject.projectDir}/changelog.html").text
+//        gameVersions = [rootProject.minecraft_version]
+//        mainPublication tasks.remapJar
+//        gameLoaders = ["neoforge","fabric"]
+//        relations {
+//
+//        }
+//
+//        var CURSE_API_KEY = project.findProperty("curseforge") ?: System.getenv("curseforge") ?: ""
+//        if (CURSE_API_KEY != "") {
+//            curseforge {
+//                token = CURSE_API_KEY
+//                id = "${rootProject.curseforge_id}"
+//                gameVersions.addAll "Java ${rootProject.java_version}", "${rootProject.mod_version}"
+//            }
+//        }
+//
+//        var MODRINTH_TOKEN = project.findProperty("modrinth") ?: System.getenv("modrinth") ?: ""
+//        if (MODRINTH_TOKEN != "") {
+//            modrinth {
+//                token = MODRINTH_TOKEN
+//                id = "${rootProject.modrinth_id}"
+//                version = "$project.version+$project.name"
+//            }
+//        }
+//    }
+//}
+//
+//task publishMeEverywhere(){
+//    dependsOn ':forge:publishUnified'
+//    dependsOn ':fabric:publishUnified'
+//}
+
 apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
 
 idea.module {

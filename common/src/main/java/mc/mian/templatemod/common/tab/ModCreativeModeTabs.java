@@ -1,6 +1,7 @@
-package mc.mian.templatemod.common;
+package mc.mian.templatemod.common.tab;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import mc.mian.templatemod.common.item.ModItems;
 import mc.mian.templatemod.registry.DeferredRegistry;
 import mc.mian.templatemod.registry.RegistrySupplier;
 import mc.mian.templatemod.util.ModResources;

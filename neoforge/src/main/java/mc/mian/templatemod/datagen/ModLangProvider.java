@@ -1,8 +1,7 @@
 package mc.mian.templatemod.datagen;
 
-import mc.mian.templatemod.common.ModBlocks;
-import mc.mian.templatemod.common.ModCreativeModeTabs;
-import mc.mian.templatemod.common.ModItems;
+import mc.mian.templatemod.common.block.ModBlocks;
+import mc.mian.templatemod.common.item.ModItems;
 import mc.mian.templatemod.util.ModResources;
 import net.minecraft.Util;
 import net.minecraft.data.PackOutput;
@@ -53,6 +52,10 @@ public class ModLangProvider extends LanguageProvider {
         add("itemGroup."+ModResources.MOD_ID+"."+title, translation);
     }
 
+    public void addSound(String title, String translation){
+        add(ModResources.MOD_ID+".sound."+title, translation);
+    }
+
     @Override
     protected void addTranslations() {
         addConfigOption("meow", "meow", "meow?");
@@ -60,6 +63,9 @@ public class ModLangProvider extends LanguageProvider {
         addBlock(ModBlocks.TEMPLATE_BLOCK, "Meowing Block");
         addItem(ModItems.TEMPLATE_ITEM, "Meowing Disc");
         addJukeboxSong(ModResources.TEMPLATE_JUKEBOX_SONG, "Tanger - Scratch!");
+
+        addSound("fail", "no meow :<");
+        addSound("meow", "MEOW!!");
 
         addItemGroup("template_mod", "Template Mod");
     }

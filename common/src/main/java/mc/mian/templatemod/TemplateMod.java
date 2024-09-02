@@ -1,9 +1,9 @@
 package mc.mian.templatemod;
 
-import mc.mian.templatemod.common.ModBlocks;
-import mc.mian.templatemod.common.ModCreativeModeTabs;
-import mc.mian.templatemod.common.ModItems;
-import mc.mian.templatemod.common.ModSoundEvents;
+import mc.mian.templatemod.common.block.ModBlocks;
+import mc.mian.templatemod.common.tab.ModCreativeModeTabs;
+import mc.mian.templatemod.common.item.ModItems;
+import mc.mian.templatemod.common.sound.ModSoundEvents;
 import mc.mian.templatemod.config.ModConfiguration;
 import mc.mian.templatemod.util.ModResources;
 import org.apache.logging.log4j.LogManager;

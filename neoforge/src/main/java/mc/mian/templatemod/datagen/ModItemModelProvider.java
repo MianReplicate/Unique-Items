@@ -1,7 +1,6 @@
 package mc.mian.templatemod.datagen;
 
-import mc.mian.templatemod.TemplateMod;
-import mc.mian.templatemod.common.ModItems;
+import mc.mian.templatemod.common.item.ModItems;
 import mc.mian.templatemod.util.ModResources;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;

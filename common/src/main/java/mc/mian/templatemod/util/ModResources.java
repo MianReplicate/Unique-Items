@@ -16,6 +16,8 @@ public class ModResources {
 
     public static final ResourceKey<JukeboxSong> TEMPLATE_JUKEBOX_SONG = createJukeboxSong(MOD_ID, "template_jukebox_song");
     public static final ResourceLocation TEMPLATE_SOUND = modLoc("scratch");
+    public static final ResourceLocation TEMPLATE_SOUND_2 = modLoc("meow");
+    public static final ResourceLocation TEMPLATE_SOUND_3 = modLoc("fail");
 
     public static ResourceLocation modLoc(String name) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
