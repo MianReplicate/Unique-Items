@@ -1,4 +1,5 @@
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: "me.shedaniel.unified-publishing"
 
 evaluationDependsOn(':common')
 
@@ -108,6 +109,7 @@ dependencies {
         modRuntimeOnly("curse.maven:modernfix-${modern_fix_id}:${modern_fix_fabric}")
         modRuntimeOnly("curse.maven:ferritecore-${ferritecore_fabric_id}:${ferritecore_fabric}")
         modRuntimeOnly("curse.maven:mousetweaks-${mouse_tweaks_id}:${mouse_tweaks_fabric}")
+//        modRuntimeOnly("curse.maven:configured-${configured_id}:${configured_fabric}")
     } else if(loomPlatform == 'neoforge'){
         neoForge "net.neoforged:neoforge:${neo_version}"
 
@@ -123,6 +125,50 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowCommon(project(path: ':common', configuration: "transformProduction${projectName}")) { transitive false }
+}
+
+unifiedPublishing {
+    project {
+        displayName = "[${projectName}] ${rootProject.minecraft_version} - ${rootProject.mod_version}"
+        version="${rootProject.mod_version}"
+        releaseType = "${rootProject.mod_release_type}".toLowerCase()
+        changelog = new File("${rootProject.projectDir}/changelog.html").text
+        gameVersions = [rootProject.minecraft_version]
+        mainPublication tasks.remapJar
+        gameLoaders = ["${loomPlatform}"]
+        def toInclude
+        if(loomPlatform == 'fabric'){
+            toInclude = {
+                curseforge="forge-config-api-port-fabric"
+                modrinth="ohNO6lps"
+            }
+        } else {
+            toInclude = {}
+        }
+        relations {
+            depends{}
+            includes toInclude
+            optional{}
+            conflicts{}
+        }
+
+        var CURSE_API_KEY = project.findProperty("curseforge_token") ?: System.getenv("curseforge_token") ?: ""
+        if (CURSE_API_KEY != "") {
+            curseforge {
+                token = CURSE_API_KEY
+                id = "${rootProject.curseforge_id}"
+                gameVersions.addAll "Java ${rootProject.java_version}"
+            }
+        }
+
+        var MODRINTH_TOKEN = project.findProperty("modrinth_token") ?: System.getenv("modrinth_token") ?: ""
+        if (MODRINTH_TOKEN != "") {
+            modrinth {
+                token = MODRINTH_TOKEN
+                id = "${rootProject.modrinth_id}"
+            }
+        }
+    }
 }
 
 shadowJar {

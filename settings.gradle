@@ -15,4 +15,4 @@ include("common")
 include("fabric")
 include("neoforge")
 
-rootProject.name = "${mod_name}-${minecraft_version}"
+rootProject.name = "${mod_name}"
