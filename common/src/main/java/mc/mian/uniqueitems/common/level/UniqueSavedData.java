@@ -34,13 +34,14 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     public void putItem(Item item, int amt) {
         if(item == Items.AIR || amt < 0)
             return;
-        if(!UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(BuiltInRegistries.ITEM.getKey(item)) || (UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(BuiltInRegistries.ITEM.getKey(item)) && UniqueItems.config.INVERT_LIST.get()))
-            return;
-        UniqueItem unique = ((UniqueItem) item);
-        unique.setRetrievable(amt > 0);
-        unique.setUnique(true);
-        this.item_uniqueness_map.put(item, amt);
-        this.setDirty();
+        ResourceLocation itemLocation = BuiltInRegistries.ITEM.getKey(item);
+        if(UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(itemLocation.toString()) || (!UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(itemLocation.toString()) && UniqueItems.config.INVERT_LIST.get())){
+            UniqueItem unique = ((UniqueItem) item);
+            unique.setRetrievable(amt > 0);
+            unique.setUnique(true);
+            this.item_uniqueness_map.put(item, amt);
+            this.setDirty();
+        }
     }
 
     @Override

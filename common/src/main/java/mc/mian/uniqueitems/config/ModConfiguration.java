@@ -23,20 +23,8 @@ public class ModConfiguration {
         return comment == null ? builder.translation(translationPath).defineInRange(translationPath, defaultValue, min, max) : builder.comment(comment).translation(translationPath).defineInRange(translationPath, defaultValue, min, max);
     }
 
-    private static ForgeConfigSpec.DoubleValue buildDouble(final ForgeConfigSpec.Builder builder, String translationPath, double defaultValue, double min, double max, String comment) {
-        return builder.comment(comment).translation(translationPath).defineInRange(translationPath, defaultValue, min, max);
-    }
-
-    private static ForgeConfigSpec.ConfigValue buildString(final ForgeConfigSpec.Builder builder, String translationPath, String defaultValue, String comment) {
-        return builder.comment(comment).translation(translationPath).define(translationPath, defaultValue);
-    }
-
     private static ForgeConfigSpec.BooleanValue buildBoolean(final ForgeConfigSpec.Builder builder, String translationPath, boolean defaultValue, String comment) {
         return builder.comment(comment).translation(translationPath).define(translationPath, defaultValue);
-    }
-
-    private static ForgeConfigSpec.EnumValue buildEnum(final ForgeConfigSpec.Builder builder, String translationPath, Enum defaultValue, String comment) {
-        return builder.comment(comment).translation(translationPath).defineEnum(translationPath, defaultValue);
     }
 
     private static ForgeConfigSpec.ConfigValue<List<? extends String>> buildStringList(final ForgeConfigSpec.Builder builder, String translationPath, String comment){

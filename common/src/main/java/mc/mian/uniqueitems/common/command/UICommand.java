@@ -25,6 +25,9 @@ public class UICommand {
         dispatcher.register(
                 Commands.literal("ui")
                         .requires(commandSourceStack -> commandSourceStack.hasPermission(2))
+                        .then(Commands.literal("list")
+                                .then(Commands.literal("add"))
+                                .then(Commands.literal("remove")))
                         .then(Commands.literal("uniqueness")
                                 .then(Commands.literal("set")
                                     .then(Commands.argument("item_id", ResourceArgument.resource(context, Registries.ITEM))
@@ -69,5 +72,4 @@ public class UICommand {
         sourceStack.sendSuccess(() -> Component.translatable("gui.uniqueitems.get_uniqueness", item.key().location(), toUse), true);
         return Command.SINGLE_SUCCESS;
     }
-
 }
