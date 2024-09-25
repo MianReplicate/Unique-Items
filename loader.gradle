@@ -121,6 +121,8 @@ dependencies {
     } else if(loomPlatform == 'forge'){
         forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+        compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
+        implementation(include("io.github.llamalad7:mixinextras-forge:0.4.1"))
         // currently broken :<
 //        modRuntimeOnly("maven.modrinth:sodium:${sodium_version}-forge")
 //        runtimeOnly("mezz.jei:jei-${minecraft_version}-forge:${jei_version}")

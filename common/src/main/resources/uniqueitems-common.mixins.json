@@ -4,9 +4,11 @@
   "package": "mc.mian.uniqueitems.mixin",
   "compatibilityLevel": "JAVA_${java_version}",
   "mixins": [
-    "SlotMixin",
+    "AbstractContainerMenuMixin",
     "CraftingMenuMixin",
-    "AbstractContainerMenuMixin"
+    "ItemMixin",
+    "ItemStackMixin",
+    "LootTableMixin"
   ],
   "client": [
   ],

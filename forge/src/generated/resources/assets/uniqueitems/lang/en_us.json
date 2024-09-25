@@ -1,0 +1,4 @@
+{
+  "gui.uniqueitems.get_uniqueness": "\"%s\"'s uniqueness is %s.",
+  "gui.uniqueitems.set_uniqueness": "Successfully set \"%s\"'s uniqueness to %s."
+}

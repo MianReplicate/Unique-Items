@@ -2,6 +2,7 @@ package mc.mian.uniqueitems.common.level;
 
 import mc.mian.uniqueitems.UniqueItems;
 import mc.mian.uniqueitems.api.UniqueItem;
+import mc.mian.uniqueitems.api.UniqueData;
 import mc.mian.uniqueitems.util.ModResources;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -9,13 +10,14 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.storage.DimensionDataStorage;
 
 import java.util.HashMap;
 import java.util.Optional;
 
-public class UniqueSavedData extends SavedData implements UniqueItem {
+public class UniqueSavedData extends SavedData implements UniqueData {
     private final HashMap<Item, Integer> item_uniqueness_map = new HashMap<>();
 
     @Override
@@ -30,6 +32,13 @@ public class UniqueSavedData extends SavedData implements UniqueItem {
 
     @Override
     public void putItem(Item item, int amt) {
+        if(item == Items.AIR || amt < 0)
+            return;
+        if(!UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(BuiltInRegistries.ITEM.getKey(item)) || (UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(BuiltInRegistries.ITEM.getKey(item)) && UniqueItems.config.INVERT_LIST.get()))
+            return;
+        UniqueItem unique = ((UniqueItem) item);
+        unique.setRetrievable(amt > 0);
+        unique.setUnique(true);
         this.item_uniqueness_map.put(item, amt);
         this.setDirty();
     }

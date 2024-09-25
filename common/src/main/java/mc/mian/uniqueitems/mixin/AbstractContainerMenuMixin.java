@@ -2,6 +2,8 @@ package mc.mian.uniqueitems.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
+import mc.mian.uniqueitems.UniqueItems;
+import mc.mian.uniqueitems.api.UniqueData;
 import mc.mian.uniqueitems.common.level.UniqueSavedData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -18,11 +20,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AbstractContainerMenu.class)
 public class AbstractContainerMenuMixin {
     @Inject(method = "doClick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/Slot;tryRemove(IILnet/minecraft/world/entity/player/Player;)Ljava/util/Optional;"))
-    public void doClick(int slotId, int button, ClickType clickType, Player player, CallbackInfo ci, @Local LocalRef<Slot> slotLocalRef){
-        if(slotLocalRef.get() instanceof ResultSlot slot && player.level() instanceof ServerLevel level){
+    public void doClick(int slotId, int button, ClickType clickType, Player player, CallbackInfo ci, @Local Slot slotLocalRef){
+        if(slotLocalRef instanceof ResultSlot slot && player.level() instanceof ServerLevel level){
             Item item = slot.getItem().getItem();
-            UniqueSavedData savedData = UniqueSavedData.getOrCreate(level.getServer().overworld().getDataStorage());
-            savedData.addOrReduceItemUniqueness(item, 1);
+            UniqueData savedData = UniqueSavedData.getOrCreate(level.getServer().overworld().getDataStorage());
+            savedData.addOrReduceItemUniqueness(item, UniqueItems.config.DEFAULT_UNIQUENESS.get());
         }
     }
 }

@@ -1,11 +1,14 @@
 package mc.mian.uniqueitems.forge;
 
 import mc.mian.uniqueitems.UniqueItems;
+import mc.mian.uniqueitems.common.command.UICommand;
 import mc.mian.uniqueitems.config.ConfigHolder;
 import mc.mian.uniqueitems.datagen.ModDataGenerators;
 import mc.mian.uniqueitems.util.ModResources;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -22,5 +25,13 @@ public class UniqueItemsForge {
         UniqueItems.init();
 
         modEventBus.register(ModDataGenerators.class);
+        eventBus.register(ModEvents.class);
+    }
+
+    public static class ModEvents{
+        @SubscribeEvent
+        public static void registerCommandsEvent(final RegisterCommandsEvent event){
+            UICommand.register(event.getDispatcher(), event.getBuildContext());
+        }
     }
 }
