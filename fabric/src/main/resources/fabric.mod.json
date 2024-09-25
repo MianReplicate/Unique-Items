@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "templatemod",
+  "id": "uniqueitems",
   "version": "${mod_version}",
   "icon": "${logo_file}",
   "name": "${mod_name}",
@@ -16,10 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "mc.mian.templatemod.fabric.TemplateModFabric"
-    ],
-    "client": [
-      "mc.mian.templatemod.fabric.TemplateModFabricClient"
+      "mc.mian.uniqueitems.fabric.UniqueItemsFabric"
     ]
   },
   "mixins": [
