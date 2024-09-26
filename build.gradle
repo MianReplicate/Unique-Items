@@ -125,15 +125,6 @@ subprojects {
 
 }
 
-tasks.register('publishMeEverywhere'){
-    dependsOn ":neoforge:publishUnified"
-    dependsOn ":fabric:publishUnified"
-}
-tasks.register('buildAll'){
-    dependsOn ":neoforge:build"
-    dependsOn ":fabric:build"
-}
-
 apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
 
 idea.module {
