@@ -1,6 +1,7 @@
 package mc.mian.uniqueitems.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import mc.mian.uniqueitems.UniqueItems;
 import mc.mian.uniqueitems.api.UniqueData;
 import mc.mian.uniqueitems.api.UniqueItem;
 import mc.mian.uniqueitems.common.level.UniqueSavedData;
@@ -24,7 +25,7 @@ public class LootTableMixin {
         UniqueData uniqueData = UniqueSavedData.getOrCreate(serverLevel.getServer().overworld().getDataStorage());
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
         if(uniqueItem.isUnique()){
-            int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(Integer.MAX_VALUE);
+            int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(UniqueItems.config.DEFAULT_UNIQUENESS.get());
             if(itemStack.getCount() > uniqueness)
                 itemStack.setCount(uniqueness);
         }
@@ -35,7 +36,7 @@ public class LootTableMixin {
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
         int count = itemStack.getCount();
         if(uniqueItem.isUnique()){
-            int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(Integer.MAX_VALUE);
+            int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(UniqueItems.config.DEFAULT_UNIQUENESS.get());
             if(count > uniqueness)
                 count = uniqueness;
         }
