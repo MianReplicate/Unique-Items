@@ -2,7 +2,7 @@ package mc.mian.uniqueitems.datagen;
 
 import mc.mian.uniqueitems.util.ModResources;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class ModLangProvider extends LanguageProvider {
     public static final String MOD_ID = ModResources.MOD_ID;

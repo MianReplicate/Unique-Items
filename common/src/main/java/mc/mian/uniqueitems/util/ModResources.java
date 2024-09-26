@@ -6,6 +6,6 @@ public class ModResources {
     public static final String MOD_ID = "uniqueitems";
 
     public static ResourceLocation modLoc(String name) {
-        return new ResourceLocation(MOD_ID, name);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
 }

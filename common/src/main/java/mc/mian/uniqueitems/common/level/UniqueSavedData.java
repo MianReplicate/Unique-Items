@@ -4,11 +4,13 @@ import mc.mian.uniqueitems.UniqueItems;
 import mc.mian.uniqueitems.api.UniqueItem;
 import mc.mian.uniqueitems.api.UniqueData;
 import mc.mian.uniqueitems.util.ModResources;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -46,7 +48,7 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public CompoundTag save(CompoundTag tag, HolderLookup.Provider registries) {
         if (!this.item_uniqueness_map.isEmpty()) {
             ListTag listTag = new ListTag();
             for (Item item: item_uniqueness_map.keySet()) {
@@ -63,16 +65,16 @@ public class UniqueSavedData extends SavedData implements UniqueData {
         return tag;
     }
 
-    public static UniqueSavedData load(CompoundTag tag) {
+    public static UniqueSavedData load(CompoundTag tag, HolderLookup.Provider registries) {
         UniqueSavedData data = create();
         if (tag.contains("item_uniqueness_map", Tag.TAG_LIST)) {
             for (Tag override : tag.getList("item_uniqueness_map", Tag.TAG_COMPOUND)) {
                 if(override instanceof CompoundTag itemCompound){
                     String itemLocation = itemCompound.getString("item");
-                    Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation));
+                    Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemLocation));
                     if(((UniqueItem) item).isUnique()){
                         int amount = itemCompound.getInt("amount");
-                        data.putItem(BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation)), amount);
+                        data.putItem(BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemLocation)), amount);
                     }
                 }
             }
@@ -85,6 +87,6 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     }
 
     public static UniqueSavedData getOrCreate(DimensionDataStorage dataStorage){
-        return dataStorage.computeIfAbsent(UniqueSavedData::load, UniqueSavedData::create, ModResources.MOD_ID);
+        return dataStorage.computeIfAbsent(new Factory<>(UniqueSavedData::create, UniqueSavedData::load, DataFixTypes.SAVED_DATA_FORCED_CHUNKS), ModResources.MOD_ID);
     }
 }
