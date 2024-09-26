@@ -52,7 +52,7 @@ public class UniqueSavedData extends SavedData implements UniqueData {
         if (!this.item_uniqueness_map.isEmpty()) {
             ListTag listTag = new ListTag();
             for (Item item: item_uniqueness_map.keySet()) {
-                if(((UniqueItem) item).isUnique())
+                if(!((UniqueItem) item).isUnique())
                     continue;
 
                 CompoundTag compoundTag = new CompoundTag();
@@ -83,6 +83,8 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     }
 
     public static UniqueSavedData create(){
+        UniqueSavedData uniqueSavedData = new UniqueSavedData();
+        uniqueSavedData.setDirty();
         return new UniqueSavedData();
     }
 
