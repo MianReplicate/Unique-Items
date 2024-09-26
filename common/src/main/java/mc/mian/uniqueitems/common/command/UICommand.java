@@ -2,7 +2,9 @@ package mc.mian.uniqueitems.common.command;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
+import mc.mian.uniqueitems.UniqueItems;
 import mc.mian.uniqueitems.common.level.UniqueSavedData;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -26,8 +28,17 @@ public class UICommand {
                 Commands.literal("ui")
                         .requires(commandSourceStack -> commandSourceStack.hasPermission(2))
                         .then(Commands.literal("list")
-                                .then(Commands.literal("add"))
-                                .then(Commands.literal("remove")))
+                                .then(Commands.argument("item_id", ResourceArgument.resource(context, Registries.ITEM))
+                                        .suggests((commandContext, suggestionsBuilder) ->
+                                                SharedSuggestionProvider.suggestResource(
+                                                        BuiltInRegistries.ITEM.keySet().stream(), suggestionsBuilder
+                                                ))
+                                        .then(Commands.argument("add", BoolArgumentType.bool())
+                                                .executes(source ->
+                                                        editUniqueList(
+                                                                source.getSource(),
+                                                                ResourceArgument.getResource(source, "item_id", Registries.ITEM),
+                                                                BoolArgumentType.getBool(source, "add"))))))
                         .then(Commands.literal("uniqueness")
                                 .then(Commands.literal("set")
                                     .then(Commands.argument("item_id", ResourceArgument.resource(context, Registries.ITEM))
@@ -60,16 +71,30 @@ public class UICommand {
         ))))));
     }
 
+    private static int editUniqueList(CommandSourceStack sourceStack, Holder.Reference<Item> item, boolean add){
+        List<String> unique_item_list = (List<String>) UniqueItems.config.UNIQUE_ITEM_LIST.get();
+        String stringLocation = BuiltInRegistries.ITEM.getKey(item.value()).toString();
+        if(unique_item_list.contains(stringLocation) && !add)
+            unique_item_list.remove(stringLocation);
+        else if(!unique_item_list.contains(stringLocation) && add)
+            unique_item_list.add(stringLocation);
+        UniqueItems.config.UNIQUE_ITEM_LIST.set(unique_item_list);
+        UniqueItems.config.UNIQUE_ITEM_LIST.save();
+
+        sourceStack.sendSuccess(() -> Component.translatable("chat.uniqueitems.edited_list", item.value().getDescription()), true);
+        return Command.SINGLE_SUCCESS;
+    }
+
     private static int setItemUniqueness(CommandSourceStack sourceStack, Holder.Reference<Item> item, int amount){
         UniqueSavedData.getOrCreate(sourceStack.getLevel().getServer().overworld().getDataStorage()).putItem(item.value(), amount);
-        sourceStack.sendSuccess(() -> Component.translatable("gui.uniqueitems.set_uniqueness", item.key().location(), amount), true);
+        sourceStack.sendSuccess(() -> Component.translatable("chat.uniqueitems.set_uniqueness", item.value().getDescription(), amount), true);
         return Command.SINGLE_SUCCESS;
     }
 
     private static int getItemUniqueness(CommandSourceStack sourceStack, Holder.Reference<Item> item){
         Integer amount = UniqueSavedData.getOrCreate(sourceStack.getLevel().getServer().overworld().getDataStorage()).getUniqueness(item.value()).orElse(null);
         String toUse = amount == null ? "non-existant" : amount.toString();
-        sourceStack.sendSuccess(() -> Component.translatable("gui.uniqueitems.get_uniqueness", item.key().location(), toUse), true);
+        sourceStack.sendSuccess(() -> Component.translatable("chat.uniqueitems.get_uniqueness", item.value().getDescription(), toUse), true);
         return Command.SINGLE_SUCCESS;
     }
 }

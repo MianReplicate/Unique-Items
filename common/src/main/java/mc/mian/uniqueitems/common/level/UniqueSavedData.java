@@ -26,22 +26,18 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     }
 
     @Override
-    public void addOrReduceItemUniqueness(Item item, int defaultAmt) {
-        this.putItem(item, this.getUniqueness(item).orElse(defaultAmt) - 1);
+    public void addOrReduceItemUniqueness(Item item, int defaultAmt, int decreaseBy) {
+        this.putItem(item, this.getUniqueness(item).orElse(defaultAmt) - decreaseBy);
     }
 
     @Override
     public void putItem(Item item, int amt) {
-        if(item == Items.AIR || amt < 0)
+        if(item == Items.AIR || amt < 0 || !((UniqueItem) item).isUnique())
             return;
-        ResourceLocation itemLocation = BuiltInRegistries.ITEM.getKey(item);
-        if(UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(itemLocation.toString()) || (!UniqueItems.config.UNIQUE_ITEM_LIST.get().contains(itemLocation.toString()) && UniqueItems.config.INVERT_LIST.get())){
-            UniqueItem unique = ((UniqueItem) item);
-            unique.setRetrievable(amt > 0);
-            unique.setUnique(true);
-            this.item_uniqueness_map.put(item, amt);
-            this.setDirty();
-        }
+        UniqueItem unique = ((UniqueItem) item);
+        unique.setRetrievable(amt > 0);
+        this.item_uniqueness_map.put(item, amt);
+        this.setDirty();
     }
 
     @Override
@@ -53,12 +49,15 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     public CompoundTag save(CompoundTag tag) {
         if (!this.item_uniqueness_map.isEmpty()) {
             ListTag listTag = new ListTag();
-            item_uniqueness_map.forEach((item, amount) -> {
+            for (Item item: item_uniqueness_map.keySet()) {
+                if(((UniqueItem) item).isUnique())
+                    continue;
+
                 CompoundTag compoundTag = new CompoundTag();
                 compoundTag.putString("item", item.getDefaultInstance().getItemHolder().unwrapKey().get().location().toString());
-                compoundTag.putInt("amount", amount);
+                compoundTag.putInt("amount", item_uniqueness_map.get(item));
                 listTag.add(compoundTag);
-            });
+            }
             tag.put("item_uniqueness_map", listTag);
         }
         return tag;
@@ -70,8 +69,11 @@ public class UniqueSavedData extends SavedData implements UniqueData {
             for (Tag override : tag.getList("item_uniqueness_map", Tag.TAG_COMPOUND)) {
                 if(override instanceof CompoundTag itemCompound){
                     String itemLocation = itemCompound.getString("item");
-                    int amount = itemCompound.getInt("amount");
-                    data.putItem(BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation)), amount);
+                    Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation));
+                    if(((UniqueItem) item).isUnique()){
+                        int amount = itemCompound.getInt("amount");
+                        data.putItem(BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation)), amount);
+                    }
                 }
             }
         }

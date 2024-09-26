@@ -7,7 +7,6 @@
     "AbstractContainerMenuMixin",
     "CraftingMenuMixin",
     "ItemMixin",
-    "ItemStackMixin",
     "LootTableMixin"
   ],
   "client": [

@@ -1,4 +1,5 @@
 {
-  "gui.uniqueitems.get_uniqueness": "\"%s\"'s uniqueness is %s.",
-  "gui.uniqueitems.set_uniqueness": "Successfully set \"%s\"'s uniqueness to %s."
+  "chat.uniqueitems.edited_list": "The unique list has been successfully edited to add/remove \"%s\".",
+  "chat.uniqueitems.get_uniqueness": "\"%s\"'s uniqueness is %s.",
+  "chat.uniqueitems.set_uniqueness": "Successfully set \"%s\"'s uniqueness to %s."
 }

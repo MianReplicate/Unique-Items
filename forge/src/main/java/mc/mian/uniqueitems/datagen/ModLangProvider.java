@@ -11,13 +11,14 @@ public class ModLangProvider extends LanguageProvider {
         super(output, MOD_ID, "en_us");
     }
 
-    public void addGuiMessage(String title, String translation){
-        add("gui."+ MOD_ID+"."+title, translation);
+    public void addChatMessage(String title, String translation){
+        add("chat."+ MOD_ID+"."+title, translation);
     }
 
     @Override
     protected void addTranslations() {
-        addGuiMessage("set_uniqueness", "Successfully set \"%s\"'s uniqueness to %s.");
-        addGuiMessage("get_uniqueness", "\"%s\"'s uniqueness is %s.");
+        addChatMessage("set_uniqueness", "Successfully set \"%s\"'s uniqueness to %s.");
+        addChatMessage("get_uniqueness", "\"%s\"'s uniqueness is %s.");
+        addChatMessage("edited_list", "The unique list has been successfully edited to add/remove \"%s\".");
     }
 }
