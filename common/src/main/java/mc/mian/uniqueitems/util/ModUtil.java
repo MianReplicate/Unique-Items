@@ -16,13 +16,11 @@ public class ModUtil {
     public static void announceItemIfLastSpawn(MinecraftServer server, Item item, int decreaseBy){
         UniqueItem uniqueItem = ((UniqueItem) item);
         if(uniqueItem.isRetrievable() && uniqueItem.isUnique()) {
-            UniqueSavedData.getOrCreate(server.overworld().getDataStorage()).addOrReduceItemUniqueness(item, UniqueItems.config.DEFAULT_UNIQUENESS.get(), decreaseBy);
+            UniqueSavedData.getOrCreate(server.overworld().getDataStorage()).addOrReduceItemUniqueness(item, decreaseBy);
             if(!uniqueItem.isRetrievable()) {
-                String message = UniqueItems.config.RETRIEVED_MESSAGE.get();
-                if(!message.isBlank()) {
-                    message = message.replaceAll("%s", item.getDescription().getString());
+                String message = UniqueItems.config.RETRIEVED_MESSAGE.get().formatted(item.getDescription().getString());
+                if(!message.isBlank())
                     server.getPlayerList().broadcastSystemMessage(Component.literal(message).withStyle(ChatFormatting.YELLOW), false);
-                }
             }
         }
     }

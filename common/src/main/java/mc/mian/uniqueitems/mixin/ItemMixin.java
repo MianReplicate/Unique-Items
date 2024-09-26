@@ -13,7 +13,7 @@ public class ItemMixin implements UniqueItem {
 
     @Override
     public boolean isRetrievable() {
-        return this.retrievable || !this.isUnique();
+        return this.retrievable || !this.isUnique(); // If this is not unique, then force make it retrievable
     }
 
     @Override

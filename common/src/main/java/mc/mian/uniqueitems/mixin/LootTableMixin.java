@@ -25,7 +25,7 @@ public class LootTableMixin {
         UniqueData uniqueData = UniqueSavedData.getOrCreate(serverLevel.getServer().overworld().getDataStorage());
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
         if(uniqueItem.isUnique()){
-            int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(UniqueItems.config.DEFAULT_UNIQUENESS.get());
+            int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
             if(itemStack.getCount() > uniqueness)
                 itemStack.setCount(uniqueness);
         }
@@ -36,7 +36,7 @@ public class LootTableMixin {
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
         int count = itemStack.getCount();
         if(uniqueItem.isUnique()){
-            int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(UniqueItems.config.DEFAULT_UNIQUENESS.get());
+            int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
             if(count > uniqueness)
                 count = uniqueness;
         }

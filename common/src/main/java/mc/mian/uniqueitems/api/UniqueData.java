@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface UniqueData {
     HashMap<Item, Integer> getUniquenesses();
-    void addOrReduceItemUniqueness(Item item, int defaultAmt, int decreaseBy);
+    void addOrReduceItemUniqueness(Item item, int decreaseBy);
     void putItem(Item item, int defaultAmt);
     Optional<Integer> getUniqueness(Item item);
+    Integer getUniquenessOrDefault(Item item);
 }

@@ -26,8 +26,8 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     }
 
     @Override
-    public void addOrReduceItemUniqueness(Item item, int defaultAmt, int decreaseBy) {
-        this.putItem(item, this.getUniqueness(item).orElse(defaultAmt) - decreaseBy);
+    public void addOrReduceItemUniqueness(Item item, int decreaseBy) {
+        this.putItem(item, this.getUniquenessOrDefault(item) - decreaseBy);
     }
 
     @Override
@@ -43,6 +43,11 @@ public class UniqueSavedData extends SavedData implements UniqueData {
     @Override
     public Optional<Integer> getUniqueness(Item item) {
         return Optional.ofNullable(this.item_uniqueness_map.get(item));
+    }
+
+    @Override
+    public Integer getUniquenessOrDefault(Item item) {
+        return this.getUniqueness(item).orElse(UniqueItems.config.DEFAULT_UNIQUENESS.get());
     }
 
     @Override
