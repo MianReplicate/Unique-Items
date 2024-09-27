@@ -15,9 +15,9 @@ import net.minecraft.world.item.Item;
 public class ModUtil {
     public static void announceItemIfLastSpawn(MinecraftServer server, Item item, int decreaseBy){
         UniqueItem uniqueItem = ((UniqueItem) item);
-        if(uniqueItem.isRetrievable() && uniqueItem.isUnique()) {
+        if(uniqueItem.uniqueItems$isRetrievable() && uniqueItem.uniqueItems$isUnique()) {
             UniqueSavedData.getOrCreate(server.overworld().getDataStorage()).addOrReduceItemUniqueness(item, decreaseBy);
-            if(!uniqueItem.isRetrievable()) {
+            if(!uniqueItem.uniqueItems$isRetrievable()) {
                 String message = UniqueItems.config.RETRIEVED_MESSAGE.get().formatted(item.getDescription().getString());
                 if(!message.isBlank())
                     server.getPlayerList().broadcastSystemMessage(Component.literal(message).withStyle(ChatFormatting.YELLOW), false);

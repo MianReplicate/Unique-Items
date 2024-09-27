@@ -1,7 +1,6 @@
 package mc.mian.uniqueitems.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
-import mc.mian.uniqueitems.UniqueItems;
 import mc.mian.uniqueitems.api.UniqueData;
 import mc.mian.uniqueitems.api.UniqueItem;
 import mc.mian.uniqueitems.common.level.UniqueSavedData;
@@ -24,7 +23,7 @@ public class LootTableMixin {
     private static void addRandomItem(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
         UniqueData uniqueData = UniqueSavedData.getOrCreate(serverLevel.getServer().overworld().getDataStorage());
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
-        if(uniqueItem.isUnique()){
+        if(uniqueItem.uniqueItems$isUnique()){
             int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
             if(itemStack.getCount() > uniqueness)
                 itemStack.setCount(uniqueness);
@@ -35,7 +34,7 @@ public class LootTableMixin {
         UniqueData uniqueData = UniqueSavedData.getOrCreate(level.getServer().overworld().getDataStorage());
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
         int count = itemStack.getCount();
-        if(uniqueItem.isUnique()){
+        if(uniqueItem.uniqueItems$isUnique()){
             int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
             if(count > uniqueness)
                 count = uniqueness;
@@ -54,6 +53,6 @@ public class LootTableMixin {
 
     @Redirect(method = "method_331", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isItemEnabled(Lnet/minecraft/world/flag/FeatureFlagSet;)Z"))
     private static boolean isItemEnabled(ItemStack itemStack, FeatureFlagSet enabledFlags){
-        return itemStack.isItemEnabled(enabledFlags) && ((UniqueItem) itemStack.getItem()).isRetrievable();
+        return itemStack.isItemEnabled(enabledFlags) && ((UniqueItem) itemStack.getItem()).uniqueItems$isRetrievable();
     }
 }

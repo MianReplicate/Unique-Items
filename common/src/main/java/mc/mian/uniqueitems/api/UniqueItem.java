@@ -1,7 +1,7 @@
 package mc.mian.uniqueitems.api;
 
 public interface UniqueItem {
-    boolean isRetrievable();
-    void setRetrievable(boolean retrievable);
-    boolean isUnique();
+    boolean uniqueItems$isRetrievable();
+    void uniqueItems$setRetrievable(boolean retrievable);
+    boolean uniqueItems$isUnique();
 }

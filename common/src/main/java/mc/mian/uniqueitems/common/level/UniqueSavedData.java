@@ -32,10 +32,10 @@ public class UniqueSavedData extends SavedData implements UniqueData {
 
     @Override
     public void putItem(Item item, int amt) {
-        if(item == Items.AIR || amt < 0 || !((UniqueItem) item).isUnique())
+        if(item == Items.AIR || amt < 0 || !((UniqueItem) item).uniqueItems$isUnique())
             return;
         UniqueItem unique = ((UniqueItem) item);
-        unique.setRetrievable(amt > 0);
+        unique.uniqueItems$setRetrievable(amt > 0);
         this.item_uniqueness_map.put(item, amt);
         this.setDirty();
     }
@@ -55,7 +55,7 @@ public class UniqueSavedData extends SavedData implements UniqueData {
         if (!this.item_uniqueness_map.isEmpty()) {
             ListTag listTag = new ListTag();
             for (Item item: item_uniqueness_map.keySet()) {
-                if(!((UniqueItem) item).isUnique())
+                if(!((UniqueItem) item).uniqueItems$isUnique())
                     continue;
 
                 CompoundTag compoundTag = new CompoundTag();
@@ -75,7 +75,7 @@ public class UniqueSavedData extends SavedData implements UniqueData {
                 if(override instanceof CompoundTag itemCompound){
                     String itemLocation = itemCompound.getString("item");
                     Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation));
-                    if(((UniqueItem) item).isUnique()){
+                    if(((UniqueItem) item).uniqueItems$isUnique()){
                         int amount = itemCompound.getInt("amount");
                         data.putItem(BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation)), amount);
                     }
