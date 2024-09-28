@@ -1,5 +1,6 @@
 package mc.mian.uniqueitems.api;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.Item;
 
 import java.util.HashMap;

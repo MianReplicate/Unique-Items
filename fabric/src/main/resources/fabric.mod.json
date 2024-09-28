@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "uniqueitems",
+  "id": "${mod_id}",
   "version": "${mod_version}",
   "icon": "${logo_file}",
   "name": "${mod_name}",

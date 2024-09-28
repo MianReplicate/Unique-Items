@@ -5,6 +5,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import mc.mian.uniqueitems.UniqueItems;
+import mc.mian.uniqueitems.api.UniqueData;
 import mc.mian.uniqueitems.common.level.UniqueSavedData;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
@@ -56,7 +57,7 @@ public class UICommand {
                                     .then(Commands.argument("item_id", ResourceArgument.resource(context, Registries.ITEM))
                                             .suggests(((commandContext, suggestionsBuilder) ->
                                                     {
-                                                        Set<Item> items = UniqueSavedData.getOrCreate(commandContext.getSource().getServer().overworld().getDataStorage()).getUniquenesses().keySet();
+                                                        Set<Item> items = UniqueSavedData.getOrCreate(commandContext.getSource().getServer()).getUniquenesses().keySet();
                                                         List<ResourceLocation> resourceLocations = new ArrayList<>();
                                                         items.forEach(item -> resourceLocations.add(BuiltInRegistries.ITEM.getKey(item)));
                                                         return SharedSuggestionProvider.suggestResource(
@@ -76,8 +77,11 @@ public class UICommand {
         String stringLocation = BuiltInRegistries.ITEM.getKey(item.value()).toString();
         if(unique_item_list.contains(stringLocation) && !add)
             unique_item_list.remove(stringLocation);
-        else if(!unique_item_list.contains(stringLocation) && add)
+        else if(!unique_item_list.contains(stringLocation) && add) {
             unique_item_list.add(stringLocation);
+            UniqueData uniqueData = UniqueSavedData.getOrCreate(sourceStack.getServer());
+            uniqueData.putItem(item.value(), UniqueItems.config.DEFAULT_UNIQUENESS.get());
+        }
         UniqueItems.config.UNIQUE_ITEM_LIST.set(unique_item_list);
         UniqueItems.config.UNIQUE_ITEM_LIST.save();
 
@@ -86,13 +90,13 @@ public class UICommand {
     }
 
     private static int setItemUniqueness(CommandSourceStack sourceStack, Holder.Reference<Item> item, int amount){
-        UniqueSavedData.getOrCreate(sourceStack.getLevel().getServer().overworld().getDataStorage()).putItem(item.value(), amount);
+        UniqueSavedData.getOrCreate(sourceStack.getLevel().getServer()).putItem(item.value(), amount);
         sourceStack.sendSuccess(() -> Component.translatable("chat.uniqueitems.set_uniqueness", item.value().getDescription(), amount), true);
         return Command.SINGLE_SUCCESS;
     }
 
     private static int getItemUniqueness(CommandSourceStack sourceStack, Holder.Reference<Item> item){
-        Integer amount = UniqueSavedData.getOrCreate(sourceStack.getLevel().getServer().overworld().getDataStorage()).getUniqueness(item.value()).orElse(null);
+        Integer amount = UniqueSavedData.getOrCreate(sourceStack.getLevel().getServer()).getUniqueness(item.value()).orElse(null);
         String toUse = amount == null ? "non-existant" : amount.toString();
         sourceStack.sendSuccess(() -> Component.translatable("chat.uniqueitems.get_uniqueness", item.value().getDescription(), toUse), true);
         return Command.SINGLE_SUCCESS;

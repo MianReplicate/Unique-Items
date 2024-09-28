@@ -16,6 +16,7 @@ public class UniqueItems {
     // remove need of fabric api by registering cmds via mixin
     // list of config values should be put into a map for better lookup performance
     // put uniqueness nbt/compound on item, check in constructor, if it doesnt exist, add and decrement uniqueness counter
+    // change logo to the smaller one
 
     public static void init() {
         LOGGER.info("Ooo.. shiny shiny");

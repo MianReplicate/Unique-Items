@@ -4,21 +4,40 @@ import mc.mian.uniqueitems.UniqueItems;
 import mc.mian.uniqueitems.api.UniqueItem;
 import mc.mian.uniqueitems.api.UniqueData;
 import mc.mian.uniqueitems.util.ModResources;
+import mc.mian.uniqueitems.util.ModUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraft.world.level.storage.DimensionDataStorage;
 
 import java.util.HashMap;
 import java.util.Optional;
 
 public class UniqueSavedData extends SavedData implements UniqueData {
-    private final HashMap<Item, Integer> item_uniqueness_map = new HashMap<>();
+    private final HashMap<Item, Integer> item_uniqueness_map;
+    private MinecraftServer server;
+
+    public UniqueSavedData(MinecraftServer server){
+        this.server = server;
+        this.item_uniqueness_map = new HashMap<>();
+
+        UniqueItems.config.UNIQUE_ITEM_LIST.get().forEach(string -> this.putItem(BuiltInRegistries.ITEM.get(new ResourceLocation(string)), UniqueItems.config.DEFAULT_UNIQUENESS.get()));
+    }
+
+    public void tick(){
+        item_uniqueness_map.forEach((item, integer) -> {
+            UniqueItem uniqueItem = (UniqueItem) item;
+            if(uniqueItem.uniqueItems$getUniqueness() != integer){
+                UniqueItems.LOGGER.info("subtracting: "+ (uniqueItem.uniqueItems$getUniqueness() - integer));
+                ModUtil.announceItemIfLastSpawn(server, item, -(uniqueItem.uniqueItems$getUniqueness() - integer));
+            }
+        });
+    }
 
     @Override
     public HashMap<Item, Integer> getUniquenesses() {
@@ -32,10 +51,12 @@ public class UniqueSavedData extends SavedData implements UniqueData {
 
     @Override
     public void putItem(Item item, int amt) {
-        if(item == Items.AIR || amt < 0 || !((UniqueItem) item).uniqueItems$isUnique())
+        if(item == Items.AIR || amt < 0 || !((UniqueItem) item).uniqueItems$isUniqueInList())
             return;
         UniqueItem unique = ((UniqueItem) item);
-        unique.uniqueItems$setRetrievable(amt > 0);
+        unique.uniqueItems$setSide(false);
+        unique.uniqueItems$setUniqueness(amt);
+        UniqueItems.LOGGER.info("set for "+ item);
         this.item_uniqueness_map.put(item, amt);
         this.setDirty();
     }
@@ -55,7 +76,7 @@ public class UniqueSavedData extends SavedData implements UniqueData {
         if (!this.item_uniqueness_map.isEmpty()) {
             ListTag listTag = new ListTag();
             for (Item item: item_uniqueness_map.keySet()) {
-                if(!((UniqueItem) item).uniqueItems$isUnique())
+                if(!((UniqueItem) item).uniqueItems$isUniqueInList())
                     continue;
 
                 CompoundTag compoundTag = new CompoundTag();
@@ -68,14 +89,14 @@ public class UniqueSavedData extends SavedData implements UniqueData {
         return tag;
     }
 
-    public static UniqueSavedData load(CompoundTag tag) {
-        UniqueSavedData data = create();
+    public static UniqueSavedData load(CompoundTag tag, MinecraftServer server) {
+        UniqueSavedData data = create(server);
         if (tag.contains("item_uniqueness_map", Tag.TAG_LIST)) {
             for (Tag override : tag.getList("item_uniqueness_map", Tag.TAG_COMPOUND)) {
                 if(override instanceof CompoundTag itemCompound){
                     String itemLocation = itemCompound.getString("item");
                     Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation));
-                    if(((UniqueItem) item).uniqueItems$isUnique()){
+                    if(((UniqueItem) item).uniqueItems$isUniqueInList()){
                         int amount = itemCompound.getInt("amount");
                         data.putItem(BuiltInRegistries.ITEM.get(new ResourceLocation(itemLocation)), amount);
                     }
@@ -85,13 +106,13 @@ public class UniqueSavedData extends SavedData implements UniqueData {
         return data;
     }
 
-    public static UniqueSavedData create(){
-        UniqueSavedData uniqueSavedData = new UniqueSavedData();
-        uniqueSavedData.setDirty();
-        return new UniqueSavedData();
+    public static UniqueSavedData create(MinecraftServer server){
+        UniqueSavedData data = new UniqueSavedData(server);
+        data.setDirty();
+        return data;
     }
 
-    public static UniqueSavedData getOrCreate(DimensionDataStorage dataStorage){
-        return dataStorage.computeIfAbsent(UniqueSavedData::load, UniqueSavedData::create, ModResources.MOD_ID);
+    public static UniqueSavedData getOrCreate(MinecraftServer server){
+        return server.overworld().getDataStorage().computeIfAbsent(compound -> UniqueSavedData.load(compound, server), () -> UniqueSavedData.create(server), ModResources.MOD_ID);
     }
 }

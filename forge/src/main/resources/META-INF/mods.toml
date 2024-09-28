@@ -4,7 +4,7 @@ license = "${mod_license}"
 issueTrackerURL = "${issue_tracker_url}"
 
 [[mods]]
-modId = "uniqueitems"
+modId = "${mod_id}"
 version = "${mod_version}"
 displayName = "${mod_name}"
 logoFile = "${logo_file}"
@@ -14,7 +14,7 @@ authors = "${mod_authors}"
 description = "${mod_description}"
 
 #Neoforge dependency
-[[dependencies.uniqueitems]]
+[[dependencies.${mod_id}]]
 modId = "forge"
 mandatory = true
 versionRange = "${forge_version_range}"
@@ -22,7 +22,7 @@ ordering = "NONE"
 side = "BOTH"
 
 #Minecraft dependency
-[[dependencies.uniqueitems]]
+[[dependencies.${mod_id}]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[${minecraft_version},)"

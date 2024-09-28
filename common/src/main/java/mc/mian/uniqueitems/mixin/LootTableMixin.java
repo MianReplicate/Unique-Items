@@ -19,40 +19,40 @@ import java.util.function.Consumer;
 
 @Mixin(LootTable.class)
 public class LootTableMixin {
-    @Inject(method="method_331", at = @At(value = "HEAD"))
-    private static void addRandomItem(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
-        UniqueData uniqueData = UniqueSavedData.getOrCreate(serverLevel.getServer().overworld().getDataStorage());
-        UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
-        if(uniqueItem.uniqueItems$isUnique()){
-            int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
-            if(itemStack.getCount() > uniqueness)
-                itemStack.setCount(uniqueness);
-        }
-    }
-    @Redirect(method = "method_331", at = @At(ordinal = 1,value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getCount()I"))
-    private static int getCount(ItemStack itemStack, @Local ServerLevel level){
-        UniqueData uniqueData = UniqueSavedData.getOrCreate(level.getServer().overworld().getDataStorage());
-        UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
-        int count = itemStack.getCount();
-        if(uniqueItem.uniqueItems$isUnique()){
-            int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
-            if(count > uniqueness)
-                count = uniqueness;
-        }
-        return count;
-    }
+//    @Inject(method="method_331", at = @At(value = "HEAD"))
+//    private static void addRandomItem(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
+//        UniqueData uniqueData = UniqueSavedData.getOrCreate(serverLevel.getServer());
+//        UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
+//        if(uniqueItem.uniqueItems$isUnique()){
+//            int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
+//            if(itemStack.getCount() > uniqueness)
+//                itemStack.setCount(uniqueness);
+//        }
+//    }
+//    @Redirect(method = "method_331", at = @At(ordinal = 1,value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;getCount()I"))
+//    private static int getCount(ItemStack itemStack, @Local ServerLevel level){
+//        UniqueData uniqueData = UniqueSavedData.getOrCreate(level.getServer());
+//        UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
+//        int count = itemStack.getCount();
+//        if(uniqueItem.uniqueItems$isUnique()){
+//            int uniqueness = uniqueData.getUniquenessOrDefault(itemStack.getItem());
+//            if(count > uniqueness)
+//                count = uniqueness;
+//        }
+//        return count;
+//    }
 
-    @Inject(method = "method_331", at = @At(ordinal = 0,value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"))
-    private static void accept(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
-        ModUtil.announceItemIfLastSpawn(serverLevel.getServer(), itemStack.getItem(), itemStack.getCount());
-    }
-    @Inject(method = "method_331", at = @At(ordinal = 1,value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"))
-    private static void accept1(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
-        ModUtil.announceItemIfLastSpawn(serverLevel.getServer(), itemStack.getItem(), itemStack.getCount());
-    }
+//    @Inject(method = "method_331", at = @At(ordinal = 0,value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"))
+//    private static void accept(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
+//        ModUtil.announceItemIfLastSpawn(serverLevel.getServer(), itemStack.getItem(), itemStack.getCount());
+//    }
+//    @Inject(method = "method_331", at = @At(ordinal = 1,value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"))
+//    private static void accept1(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
+//        ModUtil.announceItemIfLastSpawn(serverLevel.getServer(), itemStack.getItem(), itemStack.getCount());
+//    }
 
-    @Redirect(method = "method_331", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isItemEnabled(Lnet/minecraft/world/flag/FeatureFlagSet;)Z"))
-    private static boolean isItemEnabled(ItemStack itemStack, FeatureFlagSet enabledFlags){
-        return itemStack.isItemEnabled(enabledFlags) && ((UniqueItem) itemStack.getItem()).uniqueItems$isRetrievable();
-    }
+//    @Redirect(method = "method_331", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isItemEnabled(Lnet/minecraft/world/flag/FeatureFlagSet;)Z"))
+//    private static boolean isItemEnabled(ItemStack itemStack, FeatureFlagSet enabledFlags){
+//        return itemStack.isItemEnabled(enabledFlags) && ((UniqueItem) itemStack.getItem()).uniqueItems$isRetrievable();
+//    }
 }
