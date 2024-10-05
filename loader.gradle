@@ -227,3 +227,25 @@ idea.module {
             file('run')
     ]
 }
+
+publishing {
+    publications {
+        if(loomPlatform == 'neoforge')
+            mavenNeoForge(MavenPublication) {
+                groupId = group
+                artifactId = mod_id
+                version = version + "-${loomPlatform}"
+                from components.java
+            }
+        else
+            mavenFabric(MavenPublication) {
+                groupId = group
+                artifactId = mod_id
+                version = version + "-${loomPlatform}"
+                from components.java
+            }
+    }
+    repositories {
+        mavenLocal()
+    }
+}
