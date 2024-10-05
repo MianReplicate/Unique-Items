@@ -1,17 +1,13 @@
 package mc.mian.templatemod.neoforge;
 
+import fuzs.forgeconfigapiport.neoforge.api.forge.v4.ForgeConfigRegistry;
 import mc.mian.templatemod.TemplateMod;
 import mc.mian.templatemod.config.ConfigHolder;
 import mc.mian.templatemod.datagen.TemplateDataGenerators;
-import mc.mian.templatemod.neoforge.event.TemplateModClientEvents;
 import mc.mian.templatemod.util.TemplateConstants;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.gui.ConfigurationScreen;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 
 @Mod(TemplateConstants.MOD_ID)
@@ -21,8 +17,8 @@ public class TemplateModNeoForge {
     public TemplateModNeoForge(IEventBus modEventBusParam) {
         modEventBus = modEventBusParam;
 
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
-        ModLoadingContext.get().getActiveContainer().registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+        ForgeConfigRegistry.INSTANCE.register(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
+//        ModLoadingContext.get().getActiveContainer().registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
         TemplateMod.config = ConfigHolder.SERVER;
         TemplateMod.init();

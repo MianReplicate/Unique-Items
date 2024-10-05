@@ -9,8 +9,13 @@ if(loomPlatform == 'neoforge')
     projectName = 'NeoForge'
 else if(loomPlatform == 'fabric')
     projectName = 'Fabric'
-else if (loomPlatform == 'forge')
+else if (loomPlatform == 'forge') {
     projectName = 'Forge'
+
+    configurations.all {
+        resolutionStrategy.force("net.sf.jopt-simple:jopt-simple:5.0.4")
+    }
+}
 
 def generatedResources = file("src/generated/resources")
 
@@ -116,15 +121,14 @@ dependencies {
     modImplementation "mysticdrew:common-networking-${loomPlatform}:${common_networking_version}-${common_networking_mc_version}"
     runtimeOnly("mezz.jei:jei-${minecraft_version}-${loomPlatform}:${jei_version}")
 
+    if(loomPlatform != 'forge'){
+        modApi "fuzs.forgeconfigapiport:forgeconfigapiport-${loomPlatform}:${forge_config_api_port_version}"
+        include "fuzs.forgeconfigapiport:forgeconfigapiport-${loomPlatform}:${forge_config_api_port_version}"
+    }
+
     if(loomPlatform == 'fabric') {
         modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
         modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
-
-        implementation 'com.electronwill.night-config:core:3.6.3'
-        implementation 'com.electronwill.night-config:toml:3.6.3'
-
-        modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
-        include "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
 
         modRuntimeOnly("maven.modrinth:sodium:${sodium_version}-fabric")
         modRuntimeOnly("curse.maven:modernfix-${modern_fix_id}:${modern_fix}")
@@ -133,9 +137,6 @@ dependencies {
 //        modRuntimeOnly("curse.maven:configured-${configured_id}:${configured_fabric}")
     } else if(loomPlatform == 'forge') {
         forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-
-        modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-forge:${forge_config_api_port_version}"
-        include "fuzs.forgeconfigapiport:forgeconfigapiport-forge:${forge_config_api_port_version}"
 
         // have to include mixinextras for Forge lol
         compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
@@ -195,9 +196,9 @@ shadowJar {
 }
 
 remapJar {
-    if(loomPlatform == 'fabric') {
+    onlyIf { loomPlatform != 'forge'}
+    if(loomPlatform == 'fabric')
         injectAccessWidener = true
-    }
 
     inputFile = shadowJar.archiveFile
     dependsOn shadowJar

@@ -1,14 +1,16 @@
 package mc.mian.templatemod.config;
 
-import net.neoforged.neoforge.common.ModConfigSpec;
+import net.minecraftforge.common.ForgeConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class ConfigHolder {
-    public static final ModConfigSpec SERVER_SPEC;
+    public static final ForgeConfigSpec SERVER_SPEC;
     public static final TemplateConfiguration SERVER;
 
     static{
-        final Pair<TemplateConfiguration, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(TemplateConfiguration::new);
+        final Pair<TemplateConfiguration, ForgeConfigSpec> specPair = new
+                ForgeConfigSpec.Builder()
+                .configure(TemplateConfiguration::new);
         SERVER = specPair.getLeft();
         SERVER_SPEC = specPair.getRight();
     }
