@@ -11,28 +11,21 @@ import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-public class ModResources {
-    public static final String MOD_ID = "templatemod";
-
-    public static final ResourceKey<JukeboxSong> TEMPLATE_JUKEBOX_SONG = createJukeboxSong(MOD_ID, "template_jukebox_song");
-    public static final ResourceLocation TEMPLATE_SOUND = modLoc("scratch");
-    public static final ResourceLocation TEMPLATE_SOUND_2 = modLoc("meow");
-    public static final ResourceLocation TEMPLATE_SOUND_3 = modLoc("fail");
-
+public class TemplateUtil {
     public static ResourceLocation modLoc(String name) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
+        return ResourceLocation.fromNamespaceAndPath(TemplateConstants.MOD_ID, name);
     }
-    private static ResourceKey<JukeboxSong> createJukeboxSong(String domain, String name){
+    public static ResourceKey<JukeboxSong> createJukeboxSong(String domain, String name){
         return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(domain, name));
     }
-    private static ResourceKey<PlacedFeature> createPlacedFeature(String domain, String name){
+    public static ResourceKey<PlacedFeature> createPlacedFeature(String domain, String name){
         return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(domain, name));
     }
-    private static ResourceKey<ConfiguredFeature<?, ?>> createConfiguredFeature(String domain, String name){
+    public static ResourceKey<ConfiguredFeature<?, ?>> createConfiguredFeature(String domain, String name){
         return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(domain, name));
     }
 
-    private static ResourceKey<LootTable> createLootTable(String domain, String name){
+    public static ResourceKey<LootTable> createLootTable(String domain, String name){
         return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(domain, name));
     }
 

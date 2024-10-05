@@ -1,23 +1,22 @@
 package mc.mian.templatemod;
 
-import mc.mian.templatemod.common.block.ModBlocks;
-import mc.mian.templatemod.common.tab.ModCreativeModeTabs;
-import mc.mian.templatemod.common.item.ModItems;
-import mc.mian.templatemod.common.sound.ModSoundEvents;
-import mc.mian.templatemod.config.ModConfiguration;
-import mc.mian.templatemod.util.ModResources;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import mc.mian.templatemod.common.block.TemplateBlocks;
+import mc.mian.templatemod.common.network.TemplateNetwork;
+import mc.mian.templatemod.common.tab.TemplateCreativeModeTabs;
+import mc.mian.templatemod.common.item.TemplateItems;
+import mc.mian.templatemod.common.sound.TemplateSoundEvents;
+import mc.mian.templatemod.config.TemplateConfiguration;
+import mc.mian.templatemod.util.TemplateConstants;
 
 public class TemplateMod {
-    public static final Logger LOGGER = LogManager.getLogger(ModResources.MOD_ID);
-    public static ModConfiguration config;
+    public static TemplateConfiguration config;
 
     public static void init() {
-        LOGGER.info("Meow? MEOW!!");
-        ModCreativeModeTabs.TABS.register();
-        ModBlocks.BLOCKS.register();
-        ModItems.ITEMS.register();
-        ModSoundEvents.SOUND_EVENTS.register();
+        TemplateConstants.LOGGER.info("Meow? MEOW!!");
+        TemplateCreativeModeTabs.TABS.register();
+        TemplateBlocks.BLOCKS.register();
+        TemplateItems.ITEMS.register();
+        TemplateSoundEvents.SOUND_EVENTS.register();
+        TemplateNetwork.register();
     }
 }

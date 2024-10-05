@@ -8,6 +8,7 @@
   "templatemod.configuration.General Settings": "General Settings",
   "templatemod.configuration.General Settings.button": "Edit",
   "templatemod.configuration.General Settings.tooltip": "This category holds general values that most people will want to change.",
-  "templatemod.sound.fail": "no meow :<",
-  "templatemod.sound.meow": "MEOW!!"
+  "templatemod.keybinds.play_meow": "Play Meow",
+  "templatemod.sounds.fail": "no meow :<",
+  "templatemod.sounds.meow": "MEOW!!"
 }

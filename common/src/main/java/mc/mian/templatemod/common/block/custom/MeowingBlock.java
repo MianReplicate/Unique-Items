@@ -1,7 +1,7 @@
 package mc.mian.templatemod.common.block.custom;
 
 import mc.mian.templatemod.TemplateMod;
-import mc.mian.templatemod.common.sound.ModSoundEvents;
+import mc.mian.templatemod.common.sound.TemplateSoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -23,7 +23,7 @@ public class MeowingBlock extends Block {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         } else {
-            SoundEvent soundEvent = TemplateMod.config.meow.get() ? ModSoundEvents.TEMPLATE_SOUND_EVENT_2.get() : ModSoundEvents.TEMPLATE_SOUND_EVENT_3.get();
+            SoundEvent soundEvent = TemplateMod.config.meow.get() ? TemplateSoundEvents.TEMPLATE_SOUND_EVENT_2.get() : TemplateSoundEvents.TEMPLATE_SOUND_EVENT_3.get();
             level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), soundEvent, SoundSource.BLOCKS, 1.0F, 1.0F);
             return InteractionResult.CONSUME;
         }

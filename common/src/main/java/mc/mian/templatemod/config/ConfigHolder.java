@@ -5,10 +5,10 @@ import org.apache.commons.lang3.tuple.Pair;
 
 public class ConfigHolder {
     public static final ModConfigSpec SERVER_SPEC;
-    public static final ModConfiguration SERVER;
+    public static final TemplateConfiguration SERVER;
 
     static{
-        final Pair<ModConfiguration, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(ModConfiguration::new);
+        final Pair<TemplateConfiguration, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(TemplateConfiguration::new);
         SERVER = specPair.getLeft();
         SERVER_SPEC = specPair.getRight();
     }

@@ -1,18 +1,18 @@
 package mc.mian.templatemod.datagen;
 
-import mc.mian.templatemod.common.block.ModBlocks;
-import mc.mian.templatemod.common.item.ModItems;
-import mc.mian.templatemod.util.ModResources;
+import mc.mian.templatemod.common.block.TemplateBlocks;
+import mc.mian.templatemod.common.item.TemplateItems;
+import mc.mian.templatemod.util.TemplateConstants;
 import net.minecraft.Util;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
-public class ModLangProvider extends LanguageProvider {
-    public static final String MOD_ID = ModResources.MOD_ID;
+public class TemplateLangProvider extends LanguageProvider {
+    public static final String MOD_ID = TemplateConstants.MOD_ID;
     
-    public ModLangProvider(PackOutput output) {
+    public TemplateLangProvider(PackOutput output) {
         super(output, MOD_ID, "en_us");
     }
 
@@ -49,20 +49,25 @@ public class ModLangProvider extends LanguageProvider {
     }
 
     public void addItemGroup(String title, String translation){
-        add("itemGroup."+ModResources.MOD_ID+"."+title, translation);
+        add("itemGroup."+ TemplateConstants.MOD_ID+"."+title, translation);
     }
 
     public void addSound(String title, String translation){
-        add(ModResources.MOD_ID+".sound."+title, translation);
+        add(TemplateConstants.MOD_ID+".sounds."+title, translation);
+    }
+
+    public void addKeybind(String title, String translation){
+        add(TemplateConstants.MOD_ID+".keybinds."+title, translation);
     }
 
     @Override
     protected void addTranslations() {
         addConfigOption("meow", "meow", "meow?");
         addConfigSection("General Settings", "General Settings", "This category holds general values that most people will want to change.");
-        addBlock(ModBlocks.TEMPLATE_BLOCK, "Meowing Block");
-        addItem(ModItems.TEMPLATE_ITEM, "Meowing Disc");
-        addJukeboxSong(ModResources.TEMPLATE_JUKEBOX_SONG, "Tanger - Scratch!");
+        addBlock(TemplateBlocks.TEMPLATE_BLOCK, "Meowing Block");
+        addItem(TemplateItems.TEMPLATE_ITEM, "Meowing Disc");
+        addJukeboxSong(TemplateConstants.TEMPLATE_JUKEBOX_SONG, "Tanger - Scratch!");
+        addKeybind("ping", "Ping");
 
         addSound("fail", "no meow :<");
         addSound("meow", "MEOW!!");

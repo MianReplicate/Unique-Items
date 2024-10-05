@@ -1,8 +1,8 @@
 package mc.mian.templatemod.datagen.bootstrap;
 
-import mc.mian.templatemod.common.sound.ModSoundEvents;
+import mc.mian.templatemod.common.sound.TemplateSoundEvents;
 import mc.mian.templatemod.registry.RegistrySupplierHolder;
-import mc.mian.templatemod.util.ModResources;
+import mc.mian.templatemod.util.TemplateConstants;
 import net.minecraft.Util;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.JukeboxSong;
 
-public class ModJukeboxSongsProvider {
+public class TemplateJukeboxSongsProvider {
     private static void register(
             BootstrapContext<JukeboxSong> context, ResourceKey<JukeboxSong> key, RegistrySupplierHolder<SoundEvent, SoundEvent> soundEvent, int lengthInSeconds, int comparatorOutput
     ) {
@@ -20,6 +20,6 @@ public class ModJukeboxSongsProvider {
     }
 
     public static void bootstrap(BootstrapContext<JukeboxSong> context) {
-        register(context, ModResources.TEMPLATE_JUKEBOX_SONG, ModSoundEvents.TEMPLATE_SOUND_EVENT, 156, 11);
+        register(context, TemplateConstants.TEMPLATE_JUKEBOX_SONG, TemplateSoundEvents.TEMPLATE_SOUND_EVENT, 156, 11);
     }
 }

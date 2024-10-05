@@ -7,8 +7,10 @@ def loomPlatform = project.property('loom.platform')
 def projectName
 if(loomPlatform == 'neoforge')
     projectName = 'NeoForge'
-else
+else if(loomPlatform == 'fabric')
     projectName = 'Fabric'
+else if (loomPlatform == 'forge')
+    projectName = 'Forge'
 
 def generatedResources = file("src/generated/resources")
 
@@ -19,12 +21,14 @@ sourceSets.main.resources.srcDirs = [ 'src/main/resources', {
 
 loom {
     accessWidenerPath.set(project(":common").loom.accessWidenerPath)
-    if(loomPlatform == 'neoforge'){
+    if(loomPlatform == 'neoforge' || loomPlatform == 'forge'){
         runs {
-            data {
-                data()
-                programArgs "--all", "--mod", "${mod_id}"
-                programArgs "--output", generatedResources.absolutePath
+            if(loomPlatform == 'neoforge'){
+                data {
+                    data()
+                    programArgs "--all", "--mod", "${mod_id}"
+                    programArgs "--output", generatedResources.absolutePath
+                }
             }
             client {
                 programArgs "--username", "Replicate###"
@@ -36,10 +40,26 @@ loom {
                 sourceSet project(":neoforge").sourceSets.main
             }
         }
+        if(loomPlatform == 'forge'){
+            forge {
+                if(accessWidenerFile.exists()) {
+                    convertAccessWideners = true
+                    extraAccessWideners.add accessWidenerFile.name
+                }
+
+                if(file("src/main/resources/${mod_id}.mixins.json").exists()) {
+                    mixinConfig "${mod_id}.mixins.json"
+                }
+
+                if(getRootProject().file("common/src/main/resources/${mod_id}-common.mixins.json").exists()) {
+                    mixinConfig "${mod_id}-common.mixins.json"
+                }
+            }
+        }
     }
 }
 
-def resourceTargets = ['fabric.mod.json', 'neoforge.mods.toml']
+def resourceTargets = ['fabric.mod.json', 'neoforge.mods.toml', 'mods.toml']
 def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/bin/main/"]
 def replaceProperties = [mod_id                 : mod_id, mod_name: mod_name, mod_version: mod_version,
                          mod_authors            : mod_authors, mod_credits:mod_credits, mod_description: mod_description,
@@ -48,7 +68,8 @@ def replaceProperties = [mod_id                 : mod_id, mod_name: mod_name, mo
                          mod_license            : mod_license,
                          minecraft_version      : minecraft_version, fabric_loader_version: fabric_loader_version,
                          fabric_api_version     : fabric_api_version, repository_url: repository_url,
-                         neo_version_range: neo_version_range, neo_version: neo_version, neo_loader_version_range: neo_loader_version_range
+                         neo_version_range: neo_version_range, neo_version: neo_version, neo_loader_version_range: neo_loader_version_range,
+                         forge_version_range : forge_version_range, forge_version: forge_version, forge_loader_version_range: forge_loader_version_range
                             ]
 processResources {
     inputs.properties replaceProperties
@@ -90,9 +111,10 @@ architectury {
 }
 
 dependencies {
-    implementation project(path: ':common')
-
     // thanks sodium for adding neoforge support, very cool :>
+    common_networking_mc_version = common_networking_mc_version != null ? common_networking_mc_version : minecraft_version
+    modImplementation "mysticdrew:common-networking-${loomPlatform}:${common_networking_version}-${common_networking_mc_version}"
+    runtimeOnly("mezz.jei:jei-${minecraft_version}-${loomPlatform}:${jei_version}")
 
     if(loomPlatform == 'fabric') {
         modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
@@ -105,22 +127,21 @@ dependencies {
         include "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
 
         modRuntimeOnly("maven.modrinth:sodium:${sodium_version}-fabric")
-        modRuntimeOnly("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
-        modRuntimeOnly("curse.maven:modernfix-${modern_fix_id}:${modern_fix_fabric}")
-        modRuntimeOnly("curse.maven:ferritecore-${ferritecore_fabric_id}:${ferritecore_fabric}")
-        modRuntimeOnly("curse.maven:mousetweaks-${mouse_tweaks_id}:${mouse_tweaks_fabric}")
+        modRuntimeOnly("curse.maven:modernfix-${modern_fix_id}:${modern_fix}")
+        modRuntimeOnly("curse.maven:ferritecore-${ferritecore_id}:${ferritecore}")
+        modRuntimeOnly("curse.maven:mousetweaks-${mouse_tweaks_id}:${mouse_tweaks}")
 //        modRuntimeOnly("curse.maven:configured-${configured_id}:${configured_fabric}")
+    } else if(loomPlatform == 'forge') {
+        forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+        modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-forge:${forge_config_api_port_version}"
+        include "fuzs.forgeconfigapiport:forgeconfigapiport-forge:${forge_config_api_port_version}"
+
+        // have to include mixinextras for Forge lol
+        compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
+        implementation(include("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}"))
     } else if(loomPlatform == 'neoforge'){
         neoForge "net.neoforged:neoforge:${neo_version}"
-
-        // currently broken :<
-//        modRuntimeOnly("maven.modrinth:sodium:${sodium_version}-neoforge")
-        runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
-        runtimeOnly("curse.maven:modernfix-${modern_fix_id}:${modern_fix_forge}")
-        runtimeOnly("curse.maven:ferritecore-${ferritecore_forge_id}:${ferritecore_forge}")
-
-        // disable when doing datagen
-//        runtimeOnly("curse.maven:mousetweaks-${mouse_tweaks_id}:${mouse_tweaks_forge}")
     }
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
@@ -136,20 +157,15 @@ unifiedPublishing {
         gameVersions = [rootProject.minecraft_version]
         mainPublication tasks.remapJar
         gameLoaders = ["${loomPlatform}"]
-        def toInclude
-        if(loomPlatform == 'fabric'){
-            toInclude = {
-                curseforge="forge-config-api-port-fabric"
-                modrinth="ohNO6lps"
-            }
-        } else {
-            toInclude = {}
-        }
         relations {
-            depends{}
-            includes toInclude
-            optional{}
-            conflicts{}
+            includes {
+                curseforge="common-network"
+                modrinth="common-network"
+            }
+            includes {
+                curseforge="forge-config-api-port-fabric"
+                modrinth="forge-config-api-port"
+            }
         }
 
         var CURSE_API_KEY = project.findProperty("curseforge_token") ?: System.getenv("curseforge_token") ?: ""

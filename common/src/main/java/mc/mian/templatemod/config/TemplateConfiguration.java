@@ -4,9 +4,9 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 import javax.annotation.Nullable;
 
-public class ModConfiguration {
+public class TemplateConfiguration {
     public final ModConfigSpec.BooleanValue meow;
-    public ModConfiguration(final ModConfigSpec.Builder builder) {
+    public TemplateConfiguration(final ModConfigSpec.Builder builder) {
         builder.comment("This category holds general values that most people will want to change.");
         builder.push("General Settings");
         this.meow = buildBoolean(builder, "meow", true, "meow!");

@@ -1,12 +1,12 @@
-package mc.mian.templatemod.registry.neoforge;
+package mc.mian.templatemod.registry.forge;
 
-import mc.mian.templatemod.neoforge.TemplateModNeoForge;
+import mc.mian.templatemod.forge.TemplateModForge;
 import mc.mian.templatemod.registry.DeferredRegistry;
 import mc.mian.templatemod.registry.RegistrySupplier;
 import mc.mian.templatemod.registry.RegistrySupplierHolder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,7 +34,7 @@ public class DeferredRegistryImpl {
 
         @Override
         public void register() {
-            this.register.register(TemplateModNeoForge.modEventBus);
+            this.register.register(TemplateModForge.modEventBus);
         }
 
 
