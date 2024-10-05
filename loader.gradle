@@ -119,7 +119,7 @@ dependencies {
     // thanks sodium for adding neoforge support, very cool :>
     common_networking_mc_version = common_networking_mc_version != null ? common_networking_mc_version : minecraft_version
     modImplementation "mysticdrew:common-networking-${loomPlatform}:${common_networking_version}-${common_networking_mc_version}"
-    runtimeOnly("mezz.jei:jei-${minecraft_version}-${loomPlatform}:${jei_version}")
+    modRuntimeOnly("mezz.jei:jei-${minecraft_version}-${loomPlatform}:${jei_version}")
 
     if(loomPlatform != 'forge'){
         modApi "fuzs.forgeconfigapiport:forgeconfigapiport-${loomPlatform}:${forge_config_api_port_version}"
