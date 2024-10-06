@@ -1,7 +1,5 @@
 package mc.mian.templatemod.forge;
 
-//import com.llamalad7.mixinextras.MixinExtrasBootstrap;
-//import fuzs.forgeconfigapiport.forge.api.neoforge.v4.NeoForgeConfigRegistry;
 import mc.mian.templatemod.TemplateMod;
 import mc.mian.templatemod.config.ConfigHolder;
 import mc.mian.templatemod.util.TemplateConstants;
@@ -17,7 +15,6 @@ public class TemplateModForge {
     public static final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     public static final IEventBus commonEventBus = MinecraftForge.EVENT_BUS;
     public TemplateModForge() {
-//        MixinExtrasBootstrap.init();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
 
         TemplateMod.config = ConfigHolder.SERVER;

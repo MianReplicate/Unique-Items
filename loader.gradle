@@ -40,11 +40,6 @@ loom {
             }
         }
 
-        mods {
-            forge {
-                sourceSet project(":neoforge").sourceSets.main
-            }
-        }
         if(loomPlatform == 'forge'){
             forge {
                 if(accessWidenerFile.exists()) {
@@ -58,6 +53,12 @@ loom {
 
                 if(getRootProject().file("common/src/main/resources/${mod_id}-common.mixins.json").exists()) {
                     mixinConfig "${mod_id}-common.mixins.json"
+                }
+            }
+        } else if (loomPlatform == 'neoforge'){
+            mods {
+                forge {
+                    sourceSet project(":neoforge").sourceSets.main
                 }
             }
         }
@@ -113,12 +114,14 @@ architectury {
 
     if(loomPlatform == 'fabric') fabric()
     else if (loomPlatform == 'neoforge') neoForge()
+    else if (loomPlatform == 'forge') forge()
 }
 
 dependencies {
     // thanks sodium for adding neoforge support, very cool :>
-    common_networking_mc_version = common_networking_mc_version != null ? common_networking_mc_version : minecraft_version
-    modImplementation "mysticdrew:common-networking-${loomPlatform}:${common_networking_version}-${common_networking_mc_version}"
+    def mcVersion = rootProject.hasProperty('common_networking_mc_version') ? "${common_networking_mc_version}" : "${minecraft_version}"
+    modApi "mysticdrew:common-networking-${loomPlatform}:${common_networking_version}-${mcVersion}"
+    include "mysticdrew:common-networking-${loomPlatform}:${common_networking_version}-${mcVersion}"
     runtimeOnly("mezz.jei:jei-${minecraft_version}-${loomPlatform}:${jei_version}")
 
     if(loomPlatform != 'forge'){
@@ -196,7 +199,6 @@ shadowJar {
 }
 
 remapJar {
-    onlyIf { loomPlatform != 'forge'}
     if(loomPlatform == 'fabric')
         injectAccessWidener = true
 
@@ -238,8 +240,15 @@ publishing {
                 version = version + "-${loomPlatform}"
                 from components.java
             }
-        else
+        else if(loomPlatform == 'fabric')
             mavenFabric(MavenPublication) {
+                groupId = group
+                artifactId = mod_id
+                version = version + "-${loomPlatform}"
+                from components.java
+            }
+        else if (loomPlatform == 'forge')
+            mavenForge(MavenPublication) {
                 groupId = group
                 artifactId = mod_id
                 version = version + "-${loomPlatform}"

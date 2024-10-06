@@ -15,10 +15,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     // Remove the next line if you don't want to depend on the API
 
-    implementation 'com.electronwill.night-config:core:3.6.3'
-    implementation 'com.electronwill.night-config:toml:3.6.3'
-    common_networking_mc_version = common_networking_mc_version != null ? common_networking_mc_version : minecraft_version
-    implementation "mysticdrew:common-networking-common:${common_networking_version}-${common_networking_mc_version}"
+    def mcVersion = rootProject.hasProperty('common_networking_mc_version') ? "${common_networking_mc_version}" : "${minecraft_version}"
+    modApi "mysticdrew:common-networking-common:${common_networking_version}-${mcVersion}"
     modApi "fuzs.forgeconfigapiport:forgeconfigapiport-common-forgeapi:${forge_config_api_port_version}"
     compileOnly "org.spongepowered:mixin:${mixin_version}"
 }
@@ -33,20 +31,4 @@ idea.module {
             file('build'),
             file('run')
     ]
-}
-
-publishing {
-    publications {
-        mavenCommon(MavenPublication) {
-            groupId = group
-            artifactId = mod_id
-            version = version
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
 }
