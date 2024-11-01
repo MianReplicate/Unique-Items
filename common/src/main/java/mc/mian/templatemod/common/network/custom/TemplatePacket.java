@@ -2,7 +2,6 @@ package mc.mian.templatemod.common.network.custom;
 
 import commonnetwork.networking.data.PacketContext;
 import commonnetwork.networking.data.Side;
-import mc.mian.templatemod.util.TemplateConstants;
 import mc.mian.templatemod.util.TemplateUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -35,11 +34,11 @@ public class TemplatePacket {
     {
         if (Side.CLIENT.equals(ctx.side()))
         {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Client: ").withStyle(ChatFormatting.YELLOW).append(Component.literal("Pogo!")));
+            Minecraft.getInstance().player.displayClientMessage(Component.literal("Client: ").withStyle(ChatFormatting.YELLOW).append(Component.literal("Pogo!")), false);
         }
         else
         {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Server: ").withStyle(ChatFormatting.BLUE).append(Component.literal("Pogo!")));
+            Minecraft.getInstance().player.displayClientMessage(Component.literal("Server: ").withStyle(ChatFormatting.BLUE).append(Component.literal("Pogo!")), false);
         }
     }
 }
