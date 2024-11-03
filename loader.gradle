@@ -174,22 +174,22 @@ publishMods {
     changelog = new File("${rootProject.projectDir}/changelog.md").text
     modLoaders.add("${loomPlatform}")
     type = STABLE
-    def maximum_minecraft_version = !rootProject.maximum_minecraft_version.isBlank() ? rootProject.maximum_minecraft_version : rootProject.minecraft_version
-    def toDisplay = minimum_minecraft_version != maximum_minecraft_version ? "${minimum_minecraft_version}-${maximum_minecraft_version}" : "${maximum_minecraft_version}"
+    String maximum_minecraft_version = !rootProject.maximum_minecraft_version.isBlank() ? rootProject.maximum_minecraft_version : rootProject.minecraft_version
+    String toDisplay = minimum_minecraft_version != maximum_minecraft_version ? "${minimum_minecraft_version}-${maximum_minecraft_version}" : "${maximum_minecraft_version}"
     displayName = "[${projectName}] ${toDisplay} - ${rootProject.mod_version}"
 
-    var CURSE_API_KEY = project.findProperty("curseforge_token") ?: System.getenv("curseforge_token") ?: ""
-    if (CURSE_API_KEY != "") {
+    String CURSE_TOKEN = findProperty("CURSEFORGE_TOKEN")
+    if (CURSE_TOKEN != null) {
         curseforge {
-            accessToken = CURSE_API_KEY
+            accessToken = CURSE_TOKEN
             projectId = "${rootProject.curseforge_id}"
             minecraftVersions.add("${rootProject.minecraft_version}")
             embeds("common-network", "forge-config-api-port-fabric")
         }
     }
 
-    var MODRINTH_TOKEN = project.findProperty("modrinth_token") ?: System.getenv("modrinth_token") ?: ""
-    if (MODRINTH_TOKEN != "") {
+    String MODRINTH_TOKEN = findProperty("MODRINTH_TOKEN")
+    if (MODRINTH_TOKEN != null) {
         modrinth {
             accessToken = MODRINTH_TOKEN
             projectId = "${rootProject.modrinth_id}"
