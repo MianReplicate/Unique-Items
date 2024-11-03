@@ -84,7 +84,9 @@ def replaceProperties = [
         neo_loader_version_range: neo_loader_version_range,
         forge_version_range: forge_version_range,
         forge_version: forge_version,
-        forge_loader_version_range: forge_loader_version_range
+        forge_loader_version_range: forge_loader_version_range,
+        minimum_minecraft_version: minimum_minecraft_version,
+        maximum_minecraft_version: maximum_minecraft_version,
 ]
 processResources {
     inputs.properties replaceProperties
@@ -172,24 +174,17 @@ publishMods {
     changelog = new File("${rootProject.projectDir}/changelog.md").text
     modLoaders.add("${loomPlatform}")
     type = STABLE
-    displayName = "[${projectName}] ${rootProject.minecraft_version} - ${rootProject.mod_version}"
-//    relations {
-//        includes {
-//            curseforge="common-network"
-//            modrinth="common-network"
-//        }
-//        includes {
-//            curseforge="forge-config-api-port-fabric"
-//            modrinth="forge-config-api-port"
-//        }
-//    }
-//
+    def maximum_minecraft_version = !rootProject.maximum_minecraft_version.isBlank() ? rootProject.maximum_minecraft_version : rootProject.minecraft_version
+    def toDisplay = minimum_minecraft_version != maximum_minecraft_version ? "${minimum_minecraft_version}-${maximum_minecraft_version}" : "${maximum_minecraft_version}"
+    displayName = "[${projectName}] ${toDisplay} - ${rootProject.mod_version}"
+
     var CURSE_API_KEY = project.findProperty("curseforge_token") ?: System.getenv("curseforge_token") ?: ""
     if (CURSE_API_KEY != "") {
         curseforge {
             accessToken = CURSE_API_KEY
             projectId = "${rootProject.curseforge_id}"
             minecraftVersions.add("${rootProject.minecraft_version}")
+            embeds("common-network", "forge-config-api-port-fabric")
         }
     }
 
@@ -199,6 +194,15 @@ publishMods {
             accessToken = MODRINTH_TOKEN
             projectId = "${rootProject.modrinth_id}"
             minecraftVersions.add("${rootProject.minecraft_version}")
+            embeds("common-network", "forge-config-api-port")
+            if(minimum_minecraft_version != maximum_minecraft_version){
+                minecraftVersionRange {
+                    start = "${minimum_minecraft_version}"
+                    end = "${maximum_minecraft_version}"
+
+                    includeSnapshots = true
+                }
+            }
         }
     }
 }
