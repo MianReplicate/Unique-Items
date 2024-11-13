@@ -18,9 +18,9 @@ subprojects {
     apply plugin: "dev.architectury.loom"
     apply plugin: 'org.jetbrains.gradle.plugin.idea-ext'
 
-    archivesBaseName = mod_id
-    version = "${mod_version}+${minecraft_version}"
-    group = mod_base_package
+    project.ext {
+        accessWidenerFile = file("common/src/main/resources/${mod_id}.accesswidener")
+    }
 
     repositories {
         mavenLocal()
