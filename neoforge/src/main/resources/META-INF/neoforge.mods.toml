@@ -25,7 +25,23 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "minecraft"
 type = 'required'
-versionRange = "[${minimum_minecraft_version},${maximum_minecraft_version})"
+versionRange = "[${minimum_minecraft_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+#Common Network dependency
+[[dependencies.${mod_id}]]
+modId = "commonnetworking"
+type = 'required'
+versionRange = "${common_networking_version},"
+ordering = "NONE"
+side = "BOTH"
+
+#FCAP dependency
+[[dependencies.${mod_id}]]
+modId = "forgeconfigapiport"
+type = 'required'
+versionRange = "${forge_config_api_port_version},"
 ordering = "NONE"
 side = "BOTH"
 

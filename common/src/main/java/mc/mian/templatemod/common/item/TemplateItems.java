@@ -19,6 +19,6 @@ public class TemplateItems {
             .stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(TemplateConstants.TEMPLATE_JUKEBOX_SONG)));
 
     public static RegistrySupplier<Item> registerItem(String name, Function<Item.Properties, Item> itemFunc){
-        return ITEMS.register(name, () -> itemFunc.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(TemplateConstants.MOD_ID, name)))));
+        return ITEMS.register(name, () -> itemFunc.apply(new Item.Properties()));
     }
 }

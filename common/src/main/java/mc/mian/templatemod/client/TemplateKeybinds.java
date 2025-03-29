@@ -1,7 +1,6 @@
 package mc.mian.templatemod.client;
 
 import commonnetwork.api.Network;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import mc.mian.templatemod.common.network.custom.TemplatePacket;
 import mc.mian.templatemod.util.TemplateConstants;
 import net.minecraft.ChatFormatting;

@@ -21,10 +21,18 @@ versionRange = "${forge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
+#Common Network dependency
+[[dependencies.${mod_id}]]
+modId = "commonnetworking"
+mandatory = true
+versionRange = "${common_networking_version},"
+ordering = "NONE"
+side = "BOTH"
+
 #Minecraft dependency
 [[dependencies.${mod_id}]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[${minimum_minecraft_version},${maximum_minecraft_version})"
+versionRange = "[${minimum_minecraft_version},)"
 ordering = "NONE"
 side = "BOTH"

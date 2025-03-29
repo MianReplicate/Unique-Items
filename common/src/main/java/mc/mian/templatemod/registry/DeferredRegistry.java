@@ -1,7 +1,6 @@
 package mc.mian.templatemod.registry;
 
-import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.core.Holder;
+import mc.mian.templatemod.platform.Services;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 
@@ -14,13 +13,10 @@ public abstract class DeferredRegistry<T> {
 
     public abstract <R extends T> RegistrySupplier<R> register(String id, Supplier<R> supplier);
 
-    public abstract <R extends T> RegistrySupplierHolder<T, R> registerForHolder(String id, Supplier<R> supplier);
-
     public abstract Collection<RegistrySupplier<T>> getEntries();
 
-    @ExpectPlatform
     public static <T> DeferredRegistry<T> create(String modid, ResourceKey<? extends Registry<T>> resourceKey) {
-        throw new AssertionError();
+        return Services.REGISTRY_CREATOR.create(modid, resourceKey);
     }
 
 }

@@ -63,7 +63,6 @@ public class TemplateLangProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addConfigOption("meow", "meow", "meow?");
-        addConfigSection("General Settings", "General Settings", "This category holds general values that most people will want to change.");
         addBlock(TemplateBlocks.TEMPLATE_BLOCK, "Meowing Block");
         addItem(TemplateItems.TEMPLATE_ITEM, "Meowing Disc");
         addJukeboxSong(TemplateConstants.TEMPLATE_JUKEBOX_SONG, "Tanger - Scratch!");

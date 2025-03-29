@@ -1,6 +1,5 @@
 package mc.mian.templatemod.neoforge.event;
 
-import mc.mian.templatemod.TemplateMod;
 import mc.mian.templatemod.client.TemplateKeybinds;
 import mc.mian.templatemod.util.TemplateConstants;
 import net.neoforged.api.distmarker.Dist;
@@ -22,8 +21,6 @@ public class TemplateModClientEvents {
     public static class Mod{
         @SubscribeEvent
         public static void registerKeybinds(RegisterKeyMappingsEvent event){
-            TemplateConstants.LOGGER.info(TemplateKeybinds.getKeys());
-            TemplateConstants.LOGGER.info("HI");
             TemplateKeybinds.getKeys().forEach(event::register);
         }
     }

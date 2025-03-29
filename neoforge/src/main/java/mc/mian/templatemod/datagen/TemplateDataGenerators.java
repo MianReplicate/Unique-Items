@@ -2,7 +2,6 @@ package mc.mian.templatemod.datagen;
 
 import mc.mian.templatemod.common.block.TemplateBlocks;
 import mc.mian.templatemod.common.item.TemplateItems;
-import mc.mian.templatemod.util.TemplateConstants;
 import mc.mian.templatemod.util.TemplateUtil;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -30,7 +29,7 @@ public class TemplateDataGenerators {
 
         if (ev.includeServer()) {
             gen.addProvider(ev.includeServer(), new TemplateLangProvider(packOutput));
-            gen.addProvider(ev.includeServer(), new TemplateeItemModelProvider(packOutput, efh));
+            gen.addProvider(ev.includeServer(), new TemplateItemModelProvider(packOutput, efh));
             gen.addProvider(ev.includeServer(), new TemplateStateAndModelProvider(packOutput, efh));
             gen.addProvider(ev.includeServer(), new TemplateBootstrapProvider(packOutput, provider));
         }

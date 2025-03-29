@@ -2,8 +2,6 @@ package mc.mian.templatemod.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import javax.annotation.Nullable;
-
 public class TemplateConfiguration {
     public final ForgeConfigSpec.BooleanValue meow;
     public TemplateConfiguration(final ForgeConfigSpec.Builder builder) {
@@ -12,7 +10,7 @@ public class TemplateConfiguration {
         this.meow = buildBoolean(builder, "meow", true, "meow!");
     }
 
-    private static ForgeConfigSpec.IntValue buildInt(final ForgeConfigSpec.Builder builder, String translationPath, int defaultValue, int min, int max, @Nullable String comment) {
+    private static ForgeConfigSpec.IntValue buildInt(final ForgeConfigSpec.Builder builder, String translationPath, int defaultValue, int min, int max, String comment) {
         return comment == null ? builder.translation(translationPath).defineInRange(translationPath, defaultValue, min, max) : builder.comment(comment).translation(translationPath).defineInRange(translationPath, defaultValue, min, max);
     }
 
