@@ -24,7 +24,7 @@ public class LootTableMixin {
     private static void addRandomItem(ServerLevel serverLevel, Consumer consumer, ItemStack itemStack, CallbackInfo ci){
         UniqueData uniqueData = UniqueSavedData.getOrCreate(serverLevel.getServer().overworld().getDataStorage());
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
-        if(uniqueItem.isUnique()){
+        if(uniqueItem.uniqueItems$isUnique()){
             int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(UniqueItems.config.DEFAULT_UNIQUENESS.get());
             if(itemStack.getCount() > uniqueness)
                 itemStack.setCount(uniqueness);
@@ -35,7 +35,7 @@ public class LootTableMixin {
         UniqueData uniqueData = UniqueSavedData.getOrCreate(level.getServer().overworld().getDataStorage());
         UniqueItem uniqueItem = (UniqueItem) itemStack.getItem();
         int count = itemStack.getCount();
-        if(uniqueItem.isUnique()){
+        if(uniqueItem.uniqueItems$isUnique()){
             int uniqueness = uniqueData.getUniqueness(itemStack.getItem()).orElse(UniqueItems.config.DEFAULT_UNIQUENESS.get());
             if(count > uniqueness)
                 count = uniqueness;
@@ -54,6 +54,6 @@ public class LootTableMixin {
 
     @Redirect(method = "method_331", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isItemEnabled(Lnet/minecraft/world/flag/FeatureFlagSet;)Z"))
     private static boolean isItemEnabled(ItemStack itemStack, FeatureFlagSet enabledFlags){
-        return itemStack.isItemEnabled(enabledFlags) && ((UniqueItem) itemStack.getItem()).isRetrievable();
+        return itemStack.isItemEnabled(enabledFlags) && ((UniqueItem) itemStack.getItem()).uniqueItems$isRetrievable();
     }
 }

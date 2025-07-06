@@ -22,6 +22,6 @@ public class CraftingMenuMixin {
 
     @Redirect(method = "slotChangedCraftingGrid", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;isItemEnabled(Lnet/minecraft/world/flag/FeatureFlagSet;)Z"))
     private static boolean isItemEnabled(ItemStack stack, FeatureFlagSet enabledFlags){
-        return stack.isItemEnabled(enabledFlags) && ((UniqueItem) stack.getItem()).isRetrievable();
+        return stack.isItemEnabled(enabledFlags) && ((UniqueItem) stack.getItem()).uniqueItems$isRetrievable();
     }
 }
