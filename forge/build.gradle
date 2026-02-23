@@ -19,7 +19,10 @@ minecraft {
 
     runs {
         configureEach {
-            args "--mixin.config=${mod_id}-common.mixins.json"
+            args "-XstartOnFirstThread", "-mixin.config=${mod_id}-common.mixins.json", "-launchTarget=forge_user_client"
+
+            systemProperty 'eventbus.api.strictRuntimeChecks', 'true'
+            systemProperty 'forge.enabledGameTestNamespaces', "${mod_id}"
         }
 
         register("client") {
@@ -37,13 +40,16 @@ jarJar.register() {
 }
 
 repositories {
-    maven minecraft.mavenizer
     maven fg.forgeMaven
     maven fg.minecraftLibsMaven
 }
 
+minecraft.mavenizer(repositories)
+
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:${minecraft_version}-${forge_version}")
+    annotationProcessor "net.minecraftforge:eventbus-validator:${event_bus_version}"
+
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
     jarJar("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")
 
