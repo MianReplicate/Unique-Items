@@ -1,7 +1,9 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        mavenCentral()
+        maven {
+            name = 'Minecraft libraries'
+            url = 'https://libraries.minecraft.net'
+        }
         exclusiveContent {
             forRepository {
                 maven {
@@ -11,6 +13,7 @@ pluginManagement {
             }
             filter {
                 includeGroup('net.fabricmc')
+                includeGroup('net.fabricmc.unpick')
                 includeGroup('fabric-loom')
             }
         }
@@ -37,6 +40,8 @@ pluginManagement {
             }
         }
         maven { url = 'https://maven.parchmentmc.org' }
+        gradlePluginPortal()
+        mavenCentral()
     }
 }
 
