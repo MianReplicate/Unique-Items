@@ -1,6 +1,6 @@
 package mc.mian.templatemod.fabric;
 
-import fuzs.forgeconfigapiport.fabric.api.forge.v4.ForgeConfigRegistry;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import mc.mian.templatemod.platform.FabricPlatformHelper;
 import mc.mian.templatemod.platform.Services;
 import mc.mian.templatemod.util.TemplateConstants;
@@ -13,7 +13,7 @@ public class TemplateModFabric implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        ForgeConfigRegistry.INSTANCE.register(TemplateConstants.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
+        ConfigRegistry.INSTANCE.register(TemplateConstants.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
         TemplateMod.config = ConfigHolder.SERVER;
         ((FabricPlatformHelper) Services.PLATFORM).init();
         TemplateMod.init();

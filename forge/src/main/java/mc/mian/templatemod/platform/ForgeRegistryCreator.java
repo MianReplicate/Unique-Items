@@ -34,7 +34,7 @@ public class ForgeRegistryCreator implements IRegistryCreator {
 
         @Override
         public void register() {
-            this.register.register(TemplateModForge.modEventBus);
+            this.register.register(TemplateModForge.modEventGroup);
         }
 
 

@@ -9,7 +9,7 @@ import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 
 public class TemplateModClientEvents {
-    @EventBusSubscriber(modid = TemplateConstants.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = TemplateConstants.MOD_ID, value = Dist.CLIENT)
     public static class Common{
         @SubscribeEvent
         public static void onClientTick(ClientTickEvent.Pre tickEvent){
@@ -17,7 +17,7 @@ public class TemplateModClientEvents {
         }
     }
 
-    @EventBusSubscriber(modid = TemplateConstants.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = TemplateConstants.MOD_ID, value = Dist.CLIENT)
     public static class Mod{
         @SubscribeEvent
         public static void registerKeybinds(RegisterKeyMappingsEvent event){

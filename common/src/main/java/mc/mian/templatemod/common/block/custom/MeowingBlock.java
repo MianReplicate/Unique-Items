@@ -20,7 +20,7 @@ public class MeowingBlock extends Block {
 
     @Override
     public @NotNull InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         } else {
             SoundEvent soundEvent = TemplateMod.config.meow.get() ? TemplateSoundEvents.TEMPLATE_SOUND_EVENT_2.get() : TemplateSoundEvents.TEMPLATE_SOUND_EVENT_3.get();

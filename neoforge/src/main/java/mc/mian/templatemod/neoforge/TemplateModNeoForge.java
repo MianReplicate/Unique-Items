@@ -1,6 +1,6 @@
 package mc.mian.templatemod.neoforge;
 
-import fuzs.forgeconfigapiport.neoforge.api.forge.v4.ForgeConfigRegistry;
+import fuzs.forgeconfigapiport.neoforge.api.v5.ForgeConfigRegistry;
 import mc.mian.templatemod.TemplateMod;
 import mc.mian.templatemod.config.ConfigHolder;
 import mc.mian.templatemod.datagen.TemplateDataGenerators;
@@ -17,7 +17,7 @@ public class TemplateModNeoForge {
     public TemplateModNeoForge(IEventBus modEventBusParam) {
         modEventBus = modEventBusParam;
 
-        ForgeConfigRegistry.INSTANCE.register(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
+        ForgeConfigRegistry.INSTANCE.register(TemplateConstants.MOD_ID, ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
 //        ModLoadingContext.get().getActiveContainer().registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 
         TemplateMod.config = ConfigHolder.SERVER;

@@ -3,6 +3,7 @@ package mc.mian.templatemod.client;
 import commonnetwork.api.Network;
 import mc.mian.templatemod.common.network.custom.TemplatePacket;
 import mc.mian.templatemod.util.TemplateConstants;
+import mc.mian.templatemod.util.TemplateUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -14,7 +15,8 @@ import java.util.List;
 
 public class TemplateKeybinds {
     private static final ArrayList<KeyMapping> keys = new ArrayList<>();
-    public static final KeyMapping TEMPLATE_KEY = registerKeybind(new KeyMapping("templatemod.keybinds.ping", GLFW.GLFW_KEY_G, TemplateConstants.MOD_DISPLAY_NAME));
+    public static final KeyMapping.Category TEMPLATE_CATEGORY = KeyMapping.Category.register(TemplateUtil.modLoc(TemplateConstants.MOD_DISPLAY_NAME));
+    public static final KeyMapping TEMPLATE_KEY = registerKeybind(new KeyMapping("templatemod.keybinds.ping", GLFW.GLFW_KEY_G, TEMPLATE_CATEGORY));
 
     public static void tickKeybinds(){
         if(Minecraft.getInstance().level != null) {

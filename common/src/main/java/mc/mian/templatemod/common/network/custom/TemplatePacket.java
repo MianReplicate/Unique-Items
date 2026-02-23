@@ -9,10 +9,10 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class TemplatePacket {
-    public static final ResourceLocation CHANNEL = TemplateUtil.modLoc("template_packet");
+    public static final Identifier CHANNEL = TemplateUtil.modLoc("template_packet");
     public static final StreamCodec<FriendlyByteBuf, TemplatePacket> STREAM_CODEC =
             StreamCodec.ofMember(TemplatePacket::encode, TemplatePacket::new);
 

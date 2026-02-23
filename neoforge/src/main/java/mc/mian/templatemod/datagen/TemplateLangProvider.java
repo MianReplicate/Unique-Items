@@ -3,10 +3,10 @@ package mc.mian.templatemod.datagen;
 import mc.mian.templatemod.common.block.TemplateBlocks;
 import mc.mian.templatemod.common.item.TemplateItems;
 import mc.mian.templatemod.util.TemplateConstants;
-import net.minecraft.Util;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.Util;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
 public class TemplateLangProvider extends LanguageProvider {
@@ -16,7 +16,7 @@ public class TemplateLangProvider extends LanguageProvider {
         super(output, MOD_ID, "en_us");
     }
 
-    public void addAdvancement(ResourceLocation advancementLocation, String title, String desc){
+    public void addAdvancement(Identifier advancementLocation, String title, String desc){
         add("advancement."+MOD_ID+":"+advancementLocation.getPath(), title);
         add("advancement."+MOD_ID+":"+advancementLocation.getPath()+".desc", desc);
     }
@@ -45,7 +45,7 @@ public class TemplateLangProvider extends LanguageProvider {
     }
 
     public void addJukeboxSong(ResourceKey key, String translation){
-        add(Util.makeDescriptionId("jukebox_song", key.location()), translation);
+        add(Util.makeDescriptionId("jukebox_song", key.identifier()), translation);
     }
 
     public void addItemGroup(String title, String translation){
