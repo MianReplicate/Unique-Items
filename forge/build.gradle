@@ -7,7 +7,7 @@ plugins {
 apply from: '../publish.gradle'
 
 minecraft {
-    String parchment_version = ""
+    var parchment_version = ""
     if(rootProject.hasProperty('parchment_minecraft_version')) {
         parchment_version += parchment_minecraft_version + "-"
     }
@@ -27,25 +27,25 @@ minecraft {
         }
 
         register("client") {
-            workingDirectory file('runs/client')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Client'
-            mods {
-                modClientRun {
-                    source sourceSets.main
-                }
-            }
+            workingDir.convention layout.projectDirectory.dir('runs/client')
+//            ideaModule "${rootProject.name}.${project.name}.main"
+//            taskName 'Client'
+//            mods {
+//                modClientRun {
+//                    source sourceSets.main
+//                }
+//            }
         }
 
         register("server") {
-            workingDirectory file('runs/server')
-            ideaModule "${rootProject.name}.${project.name}.main"
-            taskName 'Server'
-            mods {
-                modServerRun {
-                    source sourceSets.main
-                }
-            }
+            workingDir.convention layout.projectDirectory.dir('runs/server')
+//            ideaModule "${rootProject.name}.${project.name}.main"
+//            taskName 'Server'
+//            mods {
+//                modServerRun {
+//                    source sourceSets.main
+//                }
+//            }
         }
     }
 }
@@ -65,13 +65,19 @@ dependencies {
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            fg.component(it)
-        }
+jar {
+    manifest {
+        attributes["MixinConfigs"] = "${mod_id}-common.mixins.json"
     }
 }
+
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            from components.jarJar
+//        }
+//    }
+//}
 
 sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
