@@ -2,12 +2,17 @@ package mc.mian.templatemod.datagen;
 
 import mc.mian.templatemod.common.block.TemplateBlocks;
 import mc.mian.templatemod.common.item.TemplateItems;
+import mc.mian.templatemod.registry.RegistrySupplier;
 import mc.mian.templatemod.util.TemplateConstants;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.LanguageProvider;
+
+import java.util.function.Supplier;
 
 public class TemplateLangProvider extends LanguageProvider {
     public static final String MOD_ID = TemplateConstants.MOD_ID;
@@ -58,6 +63,17 @@ public class TemplateLangProvider extends LanguageProvider {
 
     public void addKeybind(String title, String translation){
         add(TemplateConstants.MOD_ID+".keybinds."+title, translation);
+    }
+
+    @Override
+    public void addBlock(Supplier<? extends Block> block, String name){
+        super.addBlock(block, name);
+
+        if(block instanceof RegistrySupplier<? extends Block> registrySupplier){
+            Supplier<? extends Item> item = TemplateBlocks.getBlockItem((RegistrySupplier<Block>) registrySupplier);
+            if(item != null)
+                addItem(item, name);
+        }
     }
 
     @Override

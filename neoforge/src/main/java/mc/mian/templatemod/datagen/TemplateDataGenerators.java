@@ -9,12 +9,8 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 import java.util.concurrent.CompletableFuture;
 
 public class TemplateDataGenerators {
-    private static final String PATH_ITEM_PREFIX = "textures/item";
-    private static final String PATH_BLOCK_PREFIX = "textures/block";
-    private static final String PATH_SUFFIX = ".png";
-
     @SubscribeEvent
-    public static void generateData(GatherDataEvent ev) {
+    public static void generateData(GatherDataEvent.Client ev) {
         final CompletableFuture<HolderLookup.Provider> provider = ev.getLookupProvider();
         final DataGenerator gen = ev.getGenerator();
         final PackOutput packOutput = gen.getPackOutput();

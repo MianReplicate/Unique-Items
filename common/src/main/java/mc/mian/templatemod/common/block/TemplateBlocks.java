@@ -31,4 +31,8 @@ public class TemplateBlocks {
     private static <T extends Block> RegistrySupplier<Item> registerBlockItem(String name, RegistrySupplier<T> block) {
         return TemplateItems.registerItem(name, (properties) -> new BlockItem(block.get(), properties));
     }
+
+    public static RegistrySupplier<Item> getBlockItem(RegistrySupplier<Block> block){
+        return TemplateItems.ITEMS.getEntries().stream().filter(item -> item.getId().getPath().equals(block.getId().getPath())).findFirst().orElse(null);
+    }
 }
