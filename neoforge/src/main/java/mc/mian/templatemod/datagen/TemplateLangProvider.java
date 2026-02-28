@@ -1,9 +1,11 @@
 package mc.mian.templatemod.datagen;
 
+import mc.mian.templatemod.client.TemplateKeybinds;
 import mc.mian.templatemod.common.block.TemplateBlocks;
 import mc.mian.templatemod.common.item.TemplateItems;
 import mc.mian.templatemod.registry.RegistrySupplier;
 import mc.mian.templatemod.util.TemplateConstants;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
@@ -61,8 +63,12 @@ public class TemplateLangProvider extends LanguageProvider {
         add(TemplateConstants.MOD_ID+".sounds."+title, translation);
     }
 
-    public void addKeybind(String title, String translation){
-        add(TemplateConstants.MOD_ID+".keybinds."+title, translation);
+    public void addKeyMapping(KeyMapping mapping, String translation){
+        add(mapping.getName(), translation);
+    }
+
+    public void addKeyCategory(KeyMapping.Category category, String translation){
+        add(category.id().toLanguageKey("key.category"), translation);
     }
 
     @Override
@@ -82,7 +88,8 @@ public class TemplateLangProvider extends LanguageProvider {
         addBlock(TemplateBlocks.TEMPLATE_BLOCK, "Meowing Block");
         addItem(TemplateItems.TEMPLATE_ITEM, "Meowing Disc");
         addJukeboxSong(TemplateConstants.TEMPLATE_JUKEBOX_SONG, "Tanger - Scratch!");
-        addKeybind("ping", "Ping");
+        addKeyCategory(TemplateKeybinds.TEMPLATE_CATEGORY, "Template Mod");
+        addKeyMapping(TemplateKeybinds.TEMPLATE_KEY, "Ping");
 
         addSound("fail", "no meow :<");
         addSound("meow", "MEOW!!");

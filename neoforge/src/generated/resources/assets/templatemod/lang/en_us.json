@@ -4,6 +4,7 @@
   "item.templatemod.template_item": "Meowing Disc",
   "itemGroup.templatemod.template_mod": "Template Mod",
   "jukebox_song.templatemod.template_jukebox_song": "Tanger - Scratch!",
+  "key.category.templatemod.default": "Template Mod",
   "meow": "meow",
   "meow.tooltip": "meow?",
   "templatemod.keybinds.ping": "Ping",
