@@ -1,6 +1,6 @@
 plugins {
     id 'multiloader-loader'
-    id 'net.minecraftforge.gradle' version '[7.0.6,8)'
+    id 'net.minecraftforge.gradle' version '[7.0.8,8)'
     id 'net.minecraftforge.jarjar' version '0.2.3'
 }
 
@@ -19,7 +19,7 @@ minecraft {
 
     runs {
         configureEach {
-            args "-XstartOnFirstThread", "-mixin.config=${mod_id}-common.mixins.json", "-launchTarget=forge_user_client"
+            args "-mixin.config=${mod_id}-common.mixins.json"
 
             systemProperty 'eventbus.api.strictRuntimeChecks', 'true'
             systemProperty 'forge.enabledGameTestNamespaces', "${mod_id}"

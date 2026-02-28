@@ -3,6 +3,7 @@ package mc.mian.templatemod.common.item;
 import mc.mian.templatemod.registry.DeferredRegistry;
 import mc.mian.templatemod.registry.RegistrySupplier;
 import mc.mian.templatemod.util.TemplateConstants;
+import mc.mian.templatemod.util.TemplateUtil;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
@@ -19,6 +20,6 @@ public class TemplateItems {
             .stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(TemplateConstants.TEMPLATE_JUKEBOX_SONG)));
 
     public static RegistrySupplier<Item> registerItem(String name, Function<Item.Properties, Item> itemFunc){
-        return ITEMS.register(name, () -> itemFunc.apply(new Item.Properties()));
+        return ITEMS.register(name, () -> itemFunc.apply(new Item.Properties().setId(ResourceKey.create(Registries.ITEM, TemplateUtil.modLoc(name)))));
     }
 }

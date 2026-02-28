@@ -15,7 +15,7 @@ import java.util.List;
 
 public class TemplateKeybinds {
     private static final ArrayList<KeyMapping> keys = new ArrayList<>();
-    public static final KeyMapping.Category TEMPLATE_CATEGORY = KeyMapping.Category.register(TemplateUtil.modLoc(TemplateConstants.MOD_DISPLAY_NAME));
+    public static final KeyMapping.Category TEMPLATE_CATEGORY = KeyMapping.Category.register(TemplateUtil.modLoc("default"));
     public static final KeyMapping TEMPLATE_KEY = registerKeybind(new KeyMapping("templatemod.keybinds.ping", GLFW.GLFW_KEY_G, TEMPLATE_CATEGORY));
 
     public static void tickKeybinds(){

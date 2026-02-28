@@ -16,9 +16,8 @@ import java.lang.invoke.MethodHandles;
 public class TemplateModForge {
     public static BusGroup modEventGroup = FMLJavaModLoadingContext.get().getModBusGroup();
     public static final BusGroup commonEventBus = BusGroup.DEFAULT;
-    public TemplateModForge() {
-        modEventGroup.register(MethodHandles.lookup(), this);
 
+    public TemplateModForge() {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
 
         TemplateMod.config = ConfigHolder.SERVER;

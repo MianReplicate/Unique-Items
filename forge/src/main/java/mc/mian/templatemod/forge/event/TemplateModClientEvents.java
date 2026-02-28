@@ -14,10 +14,7 @@ public class TemplateModClientEvents {
         public static void onClientTick(TickEvent.ClientTickEvent.Pre tickEvent){
             TemplateKeybinds.tickKeybinds();
         }
-    }
 
-    @net.minecraftforge.fml.common.Mod.EventBusSubscriber(modid = TemplateConstants.MOD_ID, bus = net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class Mod{
         @SubscribeEvent
         public static void registerKeybinds(RegisterKeyMappingsEvent event){
             TemplateKeybinds.getKeys().forEach(event::register);
