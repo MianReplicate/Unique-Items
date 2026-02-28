@@ -21,7 +21,7 @@ public class TemplateKeybinds {
     public static void tickKeybinds(){
         if(Minecraft.getInstance().level != null) {
             if(TEMPLATE_KEY.consumeClick()){
-                Minecraft.getInstance().player.displayClientMessage(Component.literal("Client: ").withStyle(ChatFormatting.YELLOW).append(Component.literal("Ping!")), false);
+                Minecraft.getInstance().player.sendOverlayMessage(Component.literal("Client: ").withStyle(ChatFormatting.YELLOW).append(Component.literal("Ping!")));
                 Network.getNetworkHandler().sendToServer(new TemplatePacket());
             }
         }

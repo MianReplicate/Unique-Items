@@ -12,10 +12,10 @@ neoForge {
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
-    parchment {
-        minecraftVersion = parchment_minecraft_version
-        mappingsVersion = parchment_mappings_version
-    }
+//    parchment {
+//        minecraftVersion = parchment_minecraft_version
+//        mappingsVersion = parchment_mappings_version
+//    }
     runs {
         configureEach {
             systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
@@ -43,5 +43,5 @@ neoForge {
 
 dependencies {
     implementation("mysticdrew:common-networking-neoforge:${common_networking_version}")
-    implementation("fuzs.forgeconfigapiport:forgeconfigapiport-neoforge:${forge_config_api_port_version}")
+//    implementation("fuzs.forgeconfigapiport:forgeconfigapiport-neoforge:${forge_config_api_port_version}")
 }

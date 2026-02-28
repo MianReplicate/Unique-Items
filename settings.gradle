@@ -14,7 +14,7 @@ pluginManagement {
             filter {
                 includeGroup('net.fabricmc')
                 includeGroup('net.fabricmc.unpick')
-                includeGroup('fabric-loom')
+                includeGroup('net.fabricmc.fabric-loom')
             }
         }
         exclusiveContent {
@@ -48,4 +48,4 @@ rootProject.name = mod_name
 include('common')
 include('fabric')
 include('neoforge')
-include('forge')
+//include('forge') - No support for 21.6 yet

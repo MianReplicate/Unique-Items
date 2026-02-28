@@ -34,11 +34,11 @@ public class TemplatePacket {
     {
         if (Side.CLIENT.equals(ctx.side()))
         {
-            Minecraft.getInstance().player.displayClientMessage(Component.literal("Client: ").withStyle(ChatFormatting.YELLOW).append(Component.literal("Pogo!")), false);
+            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Client: ").withStyle(ChatFormatting.YELLOW).append(Component.literal("Pogo!")));
         }
         else
         {
-            Minecraft.getInstance().player.displayClientMessage(Component.literal("Server: ").withStyle(ChatFormatting.BLUE).append(Component.literal("Pogo!")), false);
+            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Server: ").withStyle(ChatFormatting.BLUE).append(Component.literal("Pogo!")));
         }
     }
 }
