@@ -11,7 +11,7 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}+${minecraft_version}"
 
-    runtimeOnly "mysticdrew:common-networking-fabric:${common_networking_version}"
+    implementation("mysticdrew:common-networking-fabric:${common_networking_version}")
     implementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_port_version}"
 }
 
@@ -36,5 +36,11 @@ loom {
             ideConfigGenerated(true)
             runDir('runs/server')
         }
+    }
+}
+
+configurations.all {
+    resolutionStrategy.capabilitiesResolution.withCapability("mysticdrew:commonnetworking") {
+        select("mysticdrew:common-networking-fabric:${common_networking_version}")
     }
 }
