@@ -7,12 +7,6 @@ plugins {
 apply from: '../publish.gradle'
 
 minecraft {
-//    var parchment_version = ""
-//    if(rootProject.hasProperty('parchment_minecraft_version')) {
-//        parchment_version += parchment_minecraft_version + "-"
-//    }
-//    parchment_version += parchment_mappings_version + "-" + minecraft_version
-//    println parchment_version
     mappings channel: "official", version: minecraft_version
 
     accessTransformer = true
@@ -53,7 +47,7 @@ dependencies {
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
     jarJar("io.github.llamalad7:mixinextras-forge:${mixin_extras_version}")
 
-//    implementation("mysticdrew:common-networking-forge:${common_networking_version}")
+    implementation("mysticdrew:common-networking-forge:${common_networking_version}")
 }
 
 jar {
