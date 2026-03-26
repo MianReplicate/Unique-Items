@@ -43,5 +43,5 @@ neoForge {
 
 dependencies {
     implementation("mysticdrew:common-networking-neoforge:${common_networking_version}")
-//    implementation("fuzs.forgeconfigapiport:forgeconfigapiport-neoforge:${forge_config_api_port_version}")
+    implementation("fuzs.forgeconfigapiport:forgeconfigapiport-neoforge:${forge_config_api_port_version}")
 }
