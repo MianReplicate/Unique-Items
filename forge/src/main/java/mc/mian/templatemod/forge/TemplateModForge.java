@@ -14,11 +14,12 @@ import java.lang.invoke.MethodHandles;
 
 @Mod(TemplateConstants.MOD_ID)
 public class TemplateModForge {
-    public static BusGroup modEventGroup = FMLJavaModLoadingContext.get().getModBusGroup();
+    public static BusGroup modEventGroup;
     public static final BusGroup commonEventBus = BusGroup.DEFAULT;
 
-    public TemplateModForge() {
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
+    public TemplateModForge(FMLJavaModLoadingContext context) {
+        modEventGroup = context.getModBusGroup();
+        context.registerConfig(ModConfig.Type.COMMON, ConfigHolder.SERVER_SPEC);
 
         TemplateMod.config = ConfigHolder.SERVER;
         TemplateMod.init();
